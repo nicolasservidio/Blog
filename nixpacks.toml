@@ -1,8 +1,8 @@
 [phases.setup]
-nixPkgs = ["php", "phpPackages.composer"]
+nixPkgs = ["php"]
 
 [phases.install]
-cmds = ["composer install --no-dev --optimize-autoloader"]
+cmds = ["echo 'No dependencies to install'"]
 
 [phases.build]
 cmds = ["echo 'Build phase completed'"]

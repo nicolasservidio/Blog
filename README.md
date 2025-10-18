@@ -31,10 +31,8 @@ A modern, professional blog system built with PHP 8+ and MySQL, featuring MVC ar
    cd Blog
    ```
 
-2. **Install dependencies**
-   ```bash
-   composer install
-   ```
+2. **No dependencies to install**
+   The project uses only PHP built-in functions.
 
 3. **Environment setup**
    ```bash
@@ -112,7 +110,7 @@ Blog/
 │   ├── migrations/        # Database migrations
 │   └── seeds/             # Database seeders
 ├── config/                # Configuration files
-├── composer.json          # Composer dependencies
+├── env                    # Environment configuration
 ├── railway.json           # Railway configuration
 ├── nixpacks.toml          # Nixpacks configuration
 └── README.md              # This file
