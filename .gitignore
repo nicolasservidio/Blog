@@ -1,0 +1,52 @@
+# Environment files
+.env
+.env.local
+.env.production
+
+# Composer
+/vendor/
+composer.lock
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Cache
+cache/
+tmp/
+
+# Uploads
+public/uploads/
+storage/
+
+# Node modules (if using any frontend build tools)
+node_modules/
+npm-debug.log*
+
+# PHPUnit
+phpunit.xml
+.phpunit.result.cache
+
+# Coverage reports
+coverage/
+clover.xml
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Temporary files
+*.tmp
+*.temp
