@@ -1,7 +1,5 @@
 <?php
 
-session_start(); 
-
 // Optional: dynamic page title or user session logic
 $pageTitle = $pageTitle ?? 'Blog';
 

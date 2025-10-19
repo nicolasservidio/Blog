@@ -1,6 +1,7 @@
 <?php
 
 $pageTitle = 'Sign Up';
+
 ob_start();
 ?>
 
