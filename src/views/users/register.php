@@ -1,6 +1,8 @@
 <?php
-
 $pageTitle = 'Sign Up';
+
+// Include controller logic directly (like login.php)
+require_once __DIR__ . "/../../controllers/RegisterController.php";
 
 ob_start();
 ?>
@@ -18,21 +20,22 @@ ob_start();
                         <?php if (!empty($errorMessage)): ?>
                             <div class="alert-custom alert-error">
                                 <?= htmlspecialchars($errorMessage) ?>
+                                <?= htmlspecialchars($validations ?? '') ?>
                             </div>
                         <?php endif; ?>
 
-                        <form action="/src/controllers/UserController.php" method="POST" class="form-accessible" data-autosave="register-form">
-                            <input type="hidden" name="action" value="register">
-
+                        <form action="" method="POST" class="form-accessible" data-autosave="register-form">
                             <div class="form-group">
-                                <label for="username" class="form-label accessible-label">Username</label>
-                                <input type="text" id="username" name="username" required placeholder="Your username">
+                                <label for="name" class="form-label accessible-label">Full Name</label>
+                                <input type="text" id="name" name="name" required placeholder="Your full name"
+                                       value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
                                 <div class="form-error"></div>
                             </div>
 
                             <div class="form-group">
                                 <label for="email" class="form-label accessible-label">Email address</label>
-                                <input type="email" id="email" name="email" required placeholder="you@example.com">
+                                <input type="email" id="email" name="email" required placeholder="you@example.com"
+                                       value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
                                 <div class="form-error"></div>
                             </div>
 
