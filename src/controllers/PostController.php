@@ -32,7 +32,7 @@ class PostController {
     }
 
     // Load post for editing. The method "edit()" is the MVC controller method that loads a resource for editing
-    // It retrieves the current data (e.g. a post) and any related entities (e.g. authors, categories) so the view can render a pre-filled form.
+    // It retrieves the current data (e.g., a post) and any related entities (e.g. authors, categories) so the view can render a pre-filled form.
     public static function edit($conn, $id) {
 
         $List = array();

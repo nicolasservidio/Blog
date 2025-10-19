@@ -57,7 +57,7 @@ class Category {
     // Create new category
     public static function createCategory($conn, $name, $slug, $description) {
 
-        $sql = "INSERT INTO categories (name, slug, description, status, created_at) VALUES (?, ?, ?, 'active', CURRENT_TIMESTAMP)";
+        $sql = "INSERT INTO categories (name, slug, description, status, created_at) VALUES (?, ?, ?, 'active', CURRENT_TIMESTAMP)"; // state would not be necessary because there is already a default value in the DB. It is added despite redundancy to point out the syntax. Note that color is not added for the same reason: default value is also predefined in the DB
 
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "sss", $name, $slug, $description);
