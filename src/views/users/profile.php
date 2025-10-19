@@ -2,6 +2,11 @@
 $pageTitle = 'Your Profile';
 ob_start();
 
+echo '<pre>';
+print_r($_SESSION);
+echo '</pre>';
+
+
 // Check session
 if (!isset($_SESSION['user']) || !is_array($_SESSION['user'])) {
     echo '<div class="alert-custom alert-error text-center">You must be logged in to view this page.</div>';

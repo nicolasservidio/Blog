@@ -6,7 +6,9 @@
  * ========================================================================
  * -->
 <?php 
-    session_start(); 
+    if (session_status() === PHP_SESSION_NONE) { // Session starts only if not already active
+        session_start();
+    }
 ?>
 
 <!DOCTYPE html>

@@ -1,4 +1,8 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) { // Session starts only if not already active
+    session_start();
+}
+
 require_once __DIR__ . "/../../config/conn.php";
 require_once __DIR__ . "/../utils/validateUser.php";
 
@@ -37,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
                 // Store user data in session (compatible with header.php)
                 $_SESSION['user'] = [
                     'id' => $user['id'],
-                    'username' => $user['name'], // or $user['username'] if available
+                    'name' => $user['name'], // or $user['username'] if available
                     'email' => $user['email'],
                     'role' => $user['role'],
                     'avatar' => $user['avatar'],
