@@ -10,11 +10,6 @@ if (basename($_SERVER['SCRIPT_FILENAME']) === basename(__FILE__)) {  // This aut
 $pageTitle = 'Your Profile';
 ob_start();
 
-echo '<pre>';
-print_r($_SESSION);
-echo '</pre>';
-
-
 // Check session
 if (!isset($_SESSION['user']) || !is_array($_SESSION['user'])) {
     echo '<div class="alert-custom alert-error text-center">You must be logged in to view this page.</div>';
@@ -47,7 +42,7 @@ $user = $_SESSION['user'];
                         </ul>
 
                         <div class="mt-4 text-center">
-                            <a href="#" class="btn btn-outline-danger">Sign Out</a>
+                            <a href="<?= BASE_PATH ?>index.php?page=users-logout" class="btn btn-outline-danger">Sign Out</a>
                         </div>
                     </div>
                 </div>

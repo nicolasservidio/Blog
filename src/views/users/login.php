@@ -43,18 +43,17 @@ ob_start();
                         <?php endif; ?>
 
                         <form action="<?= BASE_PATH ?>index.php?page=login-action" method="POST" class="form-accessible" data-autosave="login-form">
-                            <input type="hidden" name="action" value="login">
 
                             <div class="form-group">
                                 <label for="email" class="form-label accessible-label">Email address</label>
-                                <input type="email" id="email" name="email" required placeholder="you@example.com" 
-                                        value="<?= htmlspecialchars($_SESSION['login_email'] ?? '') ?>">
+                                <input type="email" id="email" name="email" placeholder="you@example.com" required
+                                        value="<?= isset($_SESSION['login_email']) ? htmlspecialchars($_SESSION['login_email']) : (isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '') ?>">
                                 <div class="form-error"></div>
                             </div>
 
                             <div class="form-group">
                                 <label for="password" class="form-label accessible-label">Password</label>
-                                <input type="password" id="password" name="password" required placeholder="••••••••">
+                                <input type="password" id="password" name="password" placeholder="••••••••" required>
                                 <div class="form-error"></div>
                             </div>
 
@@ -62,7 +61,6 @@ ob_start();
                                 <button type="submit" class="btn btn-custom">Login</button>
                             </div>
                         </form>
-                        <?php unset($_SESSION['login_email']); ?>
 
                         <div class="mt-3 text-center">
                             <p class="text-touch-muted">Don't have an account?
@@ -75,6 +73,7 @@ ob_start();
         </div>
     </div>
 </section>
+<?php unset($_SESSION['login_email']); ?>
 
 <?php
 // Capture content and inject into layout

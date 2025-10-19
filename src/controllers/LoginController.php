@@ -9,34 +9,19 @@ if (session_status() === PHP_SESSION_NONE) { // Session starts only if not alrea
     session_start();
 }
 
-
-echo '<pre>';
-print_r($_SERVER);
-print_r($_POST);
-echo '</pre>';
-exit;
-
 // Initialize the error variable
 $errorMessage = '';
 $validations = '';
 
-echo "Inicio del controlador<br>"; //1
-
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_POST['password'])) {
-    echo "POST recibido<br>"; //2
-
 
     $tbl_name = "users"; // Table name in the DB 
     $validations = validateUser();
-    echo "Validaciones ejecutadas: $validations<br>"; //3
 
     if (empty($validations)) {
 
         $email = $_POST['email'];  // Email entered, processed and validated
         $password = $_POST['password']; // Password entered, processed and validated
-        echo "Email recibido: $email<br>"; //4
-
 
         $connection = connectDB();
     
