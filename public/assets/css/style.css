@@ -874,3 +874,547 @@ footer {
     border-top: 1px solid #dee2e6;
 }
 
+
+/* === Part 5.1 - Component-specific enhancements: Accordions, Progress Bars, Tooltips === */
+
+/* === 29. ACCORDIONS === */
+
+.accordion-custom {
+    border: 1px solid #dee2e6;
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.accordion-header {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 1px solid #dee2e6;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.accordion-header:hover {
+    background-color: #e9ecef;
+}
+
+.accordion-body {
+    padding: 1rem;
+    display: none;
+    background-color: #ffffff;
+}
+
+.accordion-body.show {
+    display: block;
+}
+
+/* === 30. PROGRESS BARS === */
+
+.progress-container {
+    background-color: #e9ecef;
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+    height: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--color-primary);
+    width: 0%;
+    transition: width 0.4s ease-in-out;
+}
+
+.progress-bar-success {
+    background-color: var(--color-success);
+}
+
+.progress-bar-warning {
+    background-color: var(--color-warning);
+}
+
+.progress-bar-danger {
+    background-color: var(--color-danger);
+}
+
+/* === 31. TOOLTIPS === */
+
+.tooltip-custom {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+}
+
+.tooltip-custom .tooltip-text {
+    visibility: hidden;
+    width: max-content;
+    max-width: 200px;
+    background-color: #212529;
+    color: #fff;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: var(--border-radius-sm);
+    position: absolute;
+    z-index: 1000;
+    bottom: 125%; /* Position above */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.tooltip-custom:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+/* === Part 5.2: Forms, Buttons, Layouts, Mobile UX === */
+
+/* === 32. FLOATING LABELS === */
+
+.form-floating-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.form-floating-group input,
+.form-floating-group textarea {
+    width: 100%;
+    padding: 1rem 0.75rem 0.25rem;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: var(--border-radius-sm);
+    background-color: #fff;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.form-floating-group label {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    font-size: 0.875rem;
+    color: #6c757d;
+    pointer-events: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-floating-group input:focus + label,
+.form-floating-group input:not(:placeholder-shown) + label,
+.form-floating-group textarea:focus + label,
+.form-floating-group textarea:not(:placeholder-shown) + label {
+    top: -0.5rem;
+    left: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--color-primary);
+    background-color: #fff;
+    padding: 0 0.25rem;
+}
+
+/* === 33. INPUT GROUPS === */
+
+.input-group {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.input-group > .input-group-text {
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    padding: 0.5rem 0.75rem;
+    font-weight: 500;
+    color: #495057;
+    border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm);
+}
+
+.input-group > input {
+    flex: 1 1 auto;
+    border: 1px solid #ced4da;
+    border-left: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+}
+
+/* === 34. BUTTON VARIANTS === */
+
+.btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--border-radius-sm);
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-outline:hover {
+    background-color: var(--color-primary);
+    color: #fff;
+}
+
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    border-radius: var(--border-radius-sm);
+    background-color: var(--color-secondary);
+    color: #fff;
+    border: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-icon:hover {
+    background-color: #5a6268;
+}
+
+/* === 35. ICON INTEGRATION === */
+
+.icon {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    fill: currentColor;
+    vertical-align: middle;
+}
+
+.icon-lg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.icon-xl {
+    width: 2rem;
+    height: 2rem;
+}
+
+/* === 36. DASHBOARD GRID === */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.dashboard-card {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: var(--border-radius-md);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.dashboard-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.dashboard-card h4 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-primary);
+}
+
+.dashboard-card p {
+    font-size: 0.95rem;
+    color: #6c757d;
+}
+
+/* === 37. BLOG CARD === */
+
+.blog-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.blog-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.blog-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.blog-card-body {
+    padding: 1rem;
+}
+
+.blog-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #212529;
+}
+
+.blog-card-text {
+    font-size: 0.95rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+.blog-card-meta {
+    font-size: 0.85rem;
+    color: #adb5bd;
+}
+
+/* === 38. PORTFOLIO TILE === */
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.portfolio-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease-in-out;
+}
+
+.portfolio-item:hover {
+    transform: scale(1.03);
+    box-shadow: var(--shadow-md);
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.portfolio-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+
+/* === Part 5.3: Mobile, Touch, Media Queries, Audit Hooks === */
+
+/* === 39. MOBILE-FIRST REFINEMENTS === */
+
+/* Universal mobile spacing */
+body {
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.container,
+.section,
+.card-custom,
+.tab-content,
+.blog-card,
+.dashboard-card {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Mobile typography scaling */
+@media (max-width: 576px) {
+    h1 { font-size: 1.75rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.25rem; }
+    h4 { font-size: 1.125rem; }
+    h5 { font-size: 1rem; }
+    h6 { font-size: 0.875rem; }
+    p, li, a, input, textarea {
+        font-size: 0.95rem;
+    }
+}
+
+/* Mobile navbar collapse */
+.navbar-custom {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.navbar-custom .nav-link {
+    padding: 0.5rem 0;
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile footer stack */
+.footer {
+    text-align: left;
+    padding: 1.5rem 1rem;
+    font-size: 0.85rem;
+}
+
+/* Mobile card stack */
+@media (max-width: 768px) {
+    .dashboard-grid,
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .blog-card {
+        flex-direction: column;
+    }
+}
+
+/* === 40. TOUCH SUPPORT === */
+
+button,
+a,
+input,
+textarea,
+select {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+input,
+textarea {
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+img {
+    -webkit-user-drag: none;
+    user-drag: none;
+}
+
+/* Tap targets */
+.btn,
+.nav-link,
+.card-custom,
+.tab-item,
+.dropdown-toggle {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* === 41. ADVANCED MEDIA QUERIES === */
+
+/* Landscape phones */
+@media (max-width: 768px) and (orientation: landscape) {
+    .navbar-custom {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .footer {
+        text-align: center;
+    }
+}
+
+/* High-resolution screens */
+@media (min-resolution: 2dppx), (min-device-pixel-ratio: 2) {
+    .icon,
+    .icon-lg,
+    .icon-xl {
+        image-rendering: crisp-edges;
+    }
+
+    .portfolio-caption {
+        font-size: 1rem;
+    }
+}
+
+/* Print override for mobile */
+@media print and (max-width: 768px) {
+    body {
+        font-size: 10pt;
+    }
+
+    .container {
+        padding: 0;
+    }
+
+    .table-custom th,
+    .table-custom td {
+        font-size: 9pt;
+        padding: 0.25rem;
+    }
+}
+
+/* === 42. AUDIT-READY HOOKS === */
+
+/* Developer audit markers */
+.audit-marker {
+    outline: 2px dashed red;
+    outline-offset: 2px;
+    background-color: rgba(255, 0, 0, 0.05);
+    padding: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #dc3545;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Layout debug grid */
+.debug-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1px;
+    background-color: #f0f0f0;
+}
+
+.debug-grid > div {
+    background-color: #d0d0d0;
+    height: 2rem;
+    text-align: center;
+    font-size: 0.75rem;
+    line-height: 2rem;
+    border: 1px solid #ccc;
+}
+
+/* === 43. VISUAL POLISH FOR SMALL SCREENS === */
+
+.shadow-touch {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.rounded-touch {
+    border-radius: var(--border-radius-lg);
+}
+
+.bg-touch-highlight {
+    background-color: #e2e6ea;
+}
+
+.text-touch-muted {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.touch-card {
+    padding: 1rem;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    background-color: #ffffff;
+    transition: transform 0.2s ease-in-out;
+}
+
+.touch-card:active {
+    transform: scale(0.98);
+    box-shadow: var(--shadow-sm);
+}
+
+
