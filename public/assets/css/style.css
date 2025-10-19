@@ -1871,3 +1871,371 @@ a:hover {
 }
 
 
+/* === Part 7.2: Carousels, Timelines, Pricing, Dropdowns, Debug === */
+
+/* === 55. CAROUSEL (CSS-ONLY) === */
+
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    will-change: transform;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    flex-shrink: 0;
+    padding: 2rem;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.carousel-slide img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 1rem;
+}
+
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    padding: 0 1rem;
+}
+
+.carousel-button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    cursor: pointer;
+    border-radius: var(--border-radius-sm);
+    transition: background-color 0.2s ease-in-out;
+}
+
+.carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* === 56. TIMELINES (for events or history) === */
+
+.timeline {
+    position: relative;
+    margin: 3rem 0;
+    padding-left: 2rem;
+    border-left: 3px solid var(--color-primary);
+}
+
+.timeline-event {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.timeline-event::before {
+    content: '';
+    position: absolute;
+    left: -1.1rem;
+    top: 0.25rem;
+    width: 1rem;
+    height: 1rem;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+.timeline-event h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    color: var(--color-primary);
+}
+
+.timeline-event p {
+    font-size: 0.95rem;
+    color: #495057;
+}
+
+/* === 57. PRICING TABLES (with responsive behavior) === */
+
+.pricing-table {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 3rem 1rem;
+}
+
+.pricing-card {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: var(--border-radius-md);
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.pricing-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.pricing-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+}
+
+.pricing-card .price {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #212529;
+}
+
+.pricing-card ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+}
+
+.pricing-card ul li {
+    font-size: 0.95rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.pricing-card .btn {
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+}
+
+/* === 58. CSS-ONLY DROPDOWN === */
+
+.dropdown-pure {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-pure input[type="checkbox"] {
+    display: none;
+}
+
+.dropdown-pure label {
+    display: block;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-primary);
+    color: #fff;
+    cursor: pointer;
+    border-radius: var(--border-radius-sm);
+}
+
+.dropdown-pure .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-md);
+    min-width: 200px;
+    z-index: 1000;
+}
+
+.dropdown-pure input[type="checkbox"]:checked ~ .dropdown-content {
+    display: block;
+}
+
+.dropdown-pure .dropdown-content a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #212529;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.dropdown-pure .dropdown-content a:hover {
+    background-color: #f8f9fa;
+}
+
+
+/* === Part 7.3: Collapsibles, Debugging, Performance, Completion Flags === */
+
+/* === 59. CSS-ONLY COLLAPSIBLE PANELS === */
+
+.collapsible {
+    border: 1px solid #dee2e6;
+    border-radius: var(--border-radius-md);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.collapsible input[type="checkbox"] {
+    display: none;
+}
+
+.collapsible label {
+    display: block;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.collapsible label:hover {
+    background-color: #e9ecef;
+}
+
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+    padding: 0 1rem;
+    background-color: #ffffff;
+}
+
+.collapsible input[type="checkbox"]:checked ~ .collapsible-content {
+    max-height: 1000px;
+    padding: 1rem;
+}
+
+/* === 60. LAYOUT DEBUGGING OVERLAYS === */
+
+.debug-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    background-image: linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.debug-outline {
+    outline: 2px dashed rgba(255, 0, 0, 0.5);
+    outline-offset: -2px;
+}
+
+.debug-box {
+    border: 2px solid rgba(0, 123, 255, 0.5);
+    background-color: rgba(0, 123, 255, 0.05);
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    color: #007bff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* === 61. PERFORMANCE TRACING HOOKS === */
+
+.trace-start {
+    border-left: 4px solid #198754;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+    background-color: rgba(25, 135, 84, 0.05);
+}
+
+.trace-end {
+    border-left: 4px solid #dc3545;
+    padding-left: 1rem;
+    margin-top: 1rem;
+    background-color: rgba(220, 53, 69, 0.05);
+}
+
+.trace-step {
+    border-left: 4px solid #0dcaf0;
+    padding-left: 1rem;
+    margin: 0.5rem 0;
+    background-color: rgba(13, 202, 240, 0.05);
+}
+
+/* === 62. COMPLETION FLAGS & MODULAR EXPORTS === */
+
+.module-complete {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    padding: 0.75rem 1rem;
+    border-left: 4px solid #198754;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    border-radius: var(--border-radius-sm);
+}
+
+.module-incomplete {
+    background-color: #fff3cd;
+    color: #664d03;
+    padding: 0.75rem 1rem;
+    border-left: 4px solid #ffc107;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    border-radius: var(--border-radius-sm);
+}
+
+.module-error {
+    background-color: #f8d7da;
+    color: #842029;
+    padding: 0.75rem 1rem;
+    border-left: 4px solid #dc3545;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    border-radius: var(--border-radius-sm);
+}
+
+/* === 63. UNIVERSAL EXPORT MARKERS === */
+
+.export-ready {
+    border: 2px dashed #198754;
+    background-color: rgba(25, 135, 84, 0.05);
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #198754;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.export-pending {
+    border: 2px dashed #ffc107;
+    background-color: rgba(255, 193, 7, 0.05);
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #ffc107;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/*
+This is something like a universal, modular, professional-grade CSS template that includes:
+
+- ✅ Responsive layout and typography  
+- ✅ Form UX and validation  
+- ✅ Buttons, cards, tables, modals, alerts  
+- ✅ Print-ready resume and invoice templates  
+- ✅ Dark mode and theme switching  
+- ✅ Bootstrap overrides and animation chaining  
+- ✅ Landing page grids, hero, CTA, testimonials  
+- ✅ Carousels, timelines, pricing tables  
+- ✅ CSS-only dropdowns and collapsibles  
+- ✅ Debugging overlays and performance tracing  
+- ✅ Completion flags and export markers
+
+This template is now ready to be integrated into any free-framework PHP+MySQL MVC project, including this blog. 
+*/
