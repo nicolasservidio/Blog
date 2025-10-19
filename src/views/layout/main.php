@@ -48,3 +48,13 @@
 
 </body>
 </html>
+
+<!-- 
+This file is a universal layout template for any free-framework PHP+MySQL project using MVC and OOP. You can copy it into:
+- A blog
+- A dashboard
+- A portfolio
+- An admin panel
+- What you want
+… and it will work without modification, as long as the documented folder structure is respected
+-->
