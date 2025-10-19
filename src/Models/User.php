@@ -1,132 +1,123 @@
 <?php
 
-namespace App\Models;
+class User {
 
-use App\Core\Model;
+    // Get all users
+    public static function getAll($conn) {
 
-/**
- * User Model
- * Handles user data and authentication
- */
-class User extends Model
-{
-    protected string $table = 'users';
-    protected array $fillable = [
-        'name', 'email', 'password', 'role', 'avatar', 'bio', 'status'
-    ];
-    protected array $guarded = ['id', 'created_at', 'updated_at'];
+        $List = array();
+        $sql = "SELECT * FROM users ORDER BY created_at DESC";
 
-    /**
-     * Find user by email
-     */
-    public function findByEmail(string $email): ?array
-    {
-        return $this->firstWhere('email', $email);
-    }
+        $result = mysqli_query($conn, $sql);
 
-    /**
-     * Verify user password
-     */
-    public function verifyPassword(string $password, string $hash): bool
-    {
-        return password_verify($password, $hash);
-    }
+        $i=0;
+        while ($data = mysqli_fetch_array($result)) {
+            $List[$i]['id'] = $data['id'];
+            $List[$i]['name'] = $data['name'];
+            $List[$i]['email'] = $data['email'];
+            $List[$i]['role'] = $data['role'];
+            $List[$i]['avatar'] = $data['avatar'];
+            $List[$i]['bio'] = $data['bio'];
+            $List[$i]['status'] = $data['status'];
+            $List[$i]['created_at'] = $data['created_at'];
+            $List[$i]['updated_at'] = $data['updated_at'];
 
-    /**
-     * Hash password
-     */
-    public function hashPassword(string $password): string
-    {
-        return password_hash($password, PASSWORD_DEFAULT);
-    }
-
-    /**
-     * Create new user
-     */
-    public function createUser(array $data): int
-    {
-        // Hash password
-        if (isset($data['password'])) {
-            $data['password'] = $this->hashPassword($data['password']);
+            $i++;
         }
 
-        // Set default values
-        $data['role'] = $data['role'] ?? 'user';
-        $data['status'] = $data['status'] ?? 'active';
-
-        return $this->create($data);
+        return $List; 
     }
 
-    /**
-     * Update user password
-     */
-    public function updatePassword(int $userId, string $newPassword): bool
-    {
-        $hashedPassword = $this->hashPassword($newPassword);
-        return $this->update($userId, ['password' => $hashedPassword]);
-    }
+    // Find user by ID
+    public static function findById($conn, $id) {
 
-    /**
-     * Get users by role
-     */
-    public function getByRole(string $role): array
-    {
-        return $this->where('role', $role);
-    }
+        $List = array();
+        $sql = "SELECT * FROM users WHERE id = ?";
 
-    /**
-     * Get active users
-     */
-    public function getActive(): array
-    {
-        return $this->where('status', 'active');
-    }
+        $stmt = mysqli_prepare($conn, $sql);
 
-    /**
-     * Check if email exists
-     */
-    public function emailExists(string $email, ?int $excludeId = null): bool
-    {
-        $sql = "SELECT COUNT(*) FROM {$this->table} WHERE email = ?";
-        $params = [$email];
+        mysqli_stmt_bind_param($stmt, "i", $id);
+        mysqli_stmt_execute($stmt);
 
-        if ($excludeId) {
-            $sql .= " AND {$this->primaryKey} != ?";
-            $params[] = $excludeId;
+        $result = mysqli_stmt_get_result($stmt);
+
+        if ($data = mysqli_fetch_array($result)) {
+            $List['id'] = $data['id'];
+            $List['name'] = $data['name'];
+            $List['email'] = $data['email'];
+            $List['role'] = $data['role'];
+            $List['avatar'] = $data['avatar'];
+            $List['bio'] = $data['bio'];
+            $List['status'] = $data['status'];
+            $List['created_at'] = $data['created_at'];
+            $List['updated_at'] = $data['updated_at'];
+            return $List;
         }
 
-        return $this->db->fetchColumn($sql, $params) > 0;
+        return null;
     }
 
-    /**
-     * Search users
-     */
-    public function search(string $query): array
-    {
-        $sql = "SELECT * FROM {$this->table} 
-                WHERE name LIKE ? OR email LIKE ? 
-                ORDER BY {$this->primaryKey} DESC";
+    // Find user by email
+    public static function findByEmail($conn, $email) {
+
+        $List = array();
+        $sql = "SELECT * FROM users WHERE email = ?";
+
+        $stmt = mysqli_prepare($conn, $sql);
+
+        mysqli_stmt_bind_param($stmt, "s", $email);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+
+        if ($data = mysqli_fetch_array($result)) {
+            $List['id'] = $data['id'];
+            $List['name'] = $data['name'];
+            $List['email'] = $data['email'];
+            $List['role'] = $data['role'];
+            $List['avatar'] = $data['avatar'];
+            $List['bio'] = $data['bio'];
+            $List['status'] = $data['status'];
+            $List['created_at'] = $data['created_at'];
+            $List['updated_at'] = $data['updated_at'];
+            return $List;
+        }
+
+        return null;
+    }
+
+    // Create new user
+    public static function createUser($conn, $name, $email, $password, $role = 'user', $status = 'active') {
         
-        $searchTerm = "%{$query}%";
-        return $this->db->fetchAll($sql, [$searchTerm, $searchTerm]);
+        $sql = "INSERT INTO users (name, email, password, role, status) VALUES (?, ?, ?, ?, ?)";
+
+        $stmt = mysqli_prepare($conn, $sql);
+
+        mysqli_stmt_bind_param($stmt, "sssss", $name, $email, $password, $role, $status);
+        return mysqli_stmt_execute($stmt);
     }
 
-    /**
-     * Get user statistics
-     */
-    public function getStats(): array
-    {
-        $total = $this->count();
-        $active = $this->countWhere('status', 'active');
-        $admins = $this->countWhere('role', 'admin');
-        $users = $this->countWhere('role', 'user');
+    // Update user profile
+    public static function updateProfile($conn, $id, $name, $avatar, $bio) {
 
-        return [
-            'total' => $total,
-            'active' => $active,
-            'inactive' => $total - $active,
-            'admins' => $admins,
-            'users' => $users
-        ];
+        $sql = "UPDATE users SET name = ?, avatar = ?, bio = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
+
+        $stmt = mysqli_prepare($conn, $sql);
+
+        mysqli_stmt_bind_param($stmt, "sssi", $name, $avatar, $bio, $id);
+        return mysqli_stmt_execute($stmt);
+    }
+
+    // Delete user
+    public static function deleteUser($conn, $id) {
+
+        $sql = "DELETE FROM users WHERE id = ?";
+
+        $stmt = mysqli_prepare($conn, $sql);
+        
+        mysqli_stmt_bind_param($stmt, "i", $id);
+        return mysqli_stmt_execute($stmt);
     }
 }
+
+?>

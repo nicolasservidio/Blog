@@ -1,9 +1,0 @@
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=blog_db
-DB_USER=root
-DB_PASS=
-APP_NAME=Professional Blog
-APP_URL=http://localhost/proyectos/Blog
-APP_ENV=development
-APP_DEBUG=true

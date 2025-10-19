@@ -1,168 +1,104 @@
 <?php
 
-namespace App\Models;
+class Post {
 
-use App\Core\Model;
+    // Get all posts
+    public static function getAll($conn) {
 
-/**
- * Post Model
- * Handles blog post data
- */
-class Post extends Model
-{
-    protected string $table = 'posts';
-    protected array $fillable = [
-        'title', 'slug', 'content', 'excerpt', 'featured_image', 
-        'status', 'author_id', 'category_id', 'meta_title', 'meta_description'
-    ];
-    protected array $guarded = ['id', 'created_at', 'updated_at'];
+        $List = array();
+        $sql = "SELECT * FROM posts ORDER BY created_at DESC";
 
-    /**
-     * Find post by slug
-     */
-    public function findBySlug(string $slug): ?array
-    {
-        return $this->firstWhere('slug', $slug);
-    }
+        $result = mysqli_query($conn, $sql);
 
-    /**
-     * Get published posts
-     */
-    public function getPublished(): array
-    {
-        return $this->where('status', 'published');
-    }
+        $i = 0;
+        while ($data = mysqli_fetch_array($result)) {
+            $List[$i]['id'] = $data['id'];
+            $List[$i]['title'] = $data['title'];
+            $List[$i]['slug'] = $data['slug'];
+            $List[$i]['content'] = $data['content'];
+            $List[$i]['excerpt'] = $data['excerpt'];
+            $List[$i]['featured_image'] = $data['featured_image'];
+            $List[$i]['status'] = $data['status'];
+            $List[$i]['author_id'] = $data['author_id'];
+            $List[$i]['category_id'] = $data['category_id'];
+            $List[$i]['meta_title'] = $data['meta_title'];
+            $List[$i]['meta_description'] = $data['meta_description'];
+            $List[$i]['created_at'] = $data['created_at'];
+            $List[$i]['updated_at'] = $data['updated_at'];
 
-    /**
-     * Get posts by category
-     */
-    public function getByCategory(int $categoryId): array
-    {
-        return $this->where('category_id', $categoryId);
-    }
-
-    /**
-     * Get posts by author
-     */
-    public function getByAuthor(int $authorId): array
-    {
-        return $this->where('author_id', $authorId);
-    }
-
-    /**
-     * Get posts with author and category info
-     */
-    public function getWithRelations(): array
-    {
-        $sql = "SELECT p.*, u.name as author_name, c.name as category_name 
-                FROM {$this->table} p 
-                LEFT JOIN users u ON p.author_id = u.id 
-                LEFT JOIN categories c ON p.category_id = c.id 
-                ORDER BY p.created_at DESC";
-        
-        return $this->db->fetchAll($sql);
-    }
-
-    /**
-     * Get published posts with relations
-     */
-    public function getPublishedWithRelations(): array
-    {
-        $sql = "SELECT p.*, u.name as author_name, c.name as category_name 
-                FROM {$this->table} p 
-                LEFT JOIN users u ON p.author_id = u.id 
-                LEFT JOIN categories c ON p.category_id = c.id 
-                WHERE p.status = 'published'
-                ORDER BY p.created_at DESC";
-        
-        return $this->db->fetchAll($sql);
-    }
-
-    /**
-     * Get single post with relations
-     */
-    public function getWithRelationsById(int $id): ?array
-    {
-        $sql = "SELECT p.*, u.name as author_name, c.name as category_name 
-                FROM {$this->table} p 
-                LEFT JOIN users u ON p.author_id = u.id 
-                LEFT JOIN categories c ON p.category_id = c.id 
-                WHERE p.id = ?";
-        
-        return $this->db->fetchOne($sql, [$id]);
-    }
-
-    /**
-     * Search posts
-     */
-    public function search(string $query): array
-    {
-        $sql = "SELECT p.*, u.name as author_name, c.name as category_name 
-                FROM {$this->table} p 
-                LEFT JOIN users u ON p.author_id = u.id 
-                LEFT JOIN categories c ON p.category_id = c.id 
-                WHERE (p.title LIKE ? OR p.content LIKE ? OR p.excerpt LIKE ?)
-                AND p.status = 'published'
-                ORDER BY p.created_at DESC";
-        
-        $searchTerm = "%{$query}%";
-        return $this->db->fetchAll($sql, [$searchTerm, $searchTerm, $searchTerm]);
-    }
-
-    /**
-     * Get recent posts
-     */
-    public function getRecent(int $limit = 5): array
-    {
-        $sql = "SELECT p.*, u.name as author_name, c.name as category_name 
-                FROM {$this->table} p 
-                LEFT JOIN users u ON p.author_id = u.id 
-                LEFT JOIN categories c ON p.category_id = c.id 
-                WHERE p.status = 'published'
-                ORDER BY p.created_at DESC 
-                LIMIT ?";
-        
-        return $this->db->fetchAll($sql, [$limit]);
-    }
-
-    /**
-     * Generate unique slug
-     */
-    public function generateSlug(string $title): string
-    {
-        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title)));
-        $originalSlug = $slug;
-        $counter = 1;
-
-        while ($this->slugExists($slug)) {
-            $slug = $originalSlug . '-' . $counter;
-            $counter++;
+            $i++;
         }
 
-        return $slug;
+        return $List;
     }
 
-    /**
-     * Check if slug exists
-     */
-    private function slugExists(string $slug): bool
-    {
-        return $this->countWhere('slug', $slug) > 0;
+    // Find post by ID
+    public static function findById($conn, $id) {
+
+        $List = array();
+        $sql = "SELECT * FROM posts WHERE id = ?";
+
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "i", $id);
+
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        if ($data = mysqli_fetch_array($result)) {
+            $List['id'] = $data['id'];
+            $List['title'] = $data['title'];
+            $List['slug'] = $data['slug'];
+            $List['content'] = $data['content'];
+            $List['excerpt'] = $data['excerpt'];
+            $List['featured_image'] = $data['featured_image'];
+            $List['status'] = $data['status'];
+            $List['author_id'] = $data['author_id'];
+            $List['category_id'] = $data['category_id'];
+            $List['meta_title'] = $data['meta_title'];
+            $List['meta_description'] = $data['meta_description'];
+            $List['created_at'] = $data['created_at'];
+            $List['updated_at'] = $data['updated_at'];
+            return $List;
+        }
+
+        return null;
     }
 
-    /**
-     * Get post statistics
-     */
-    public function getStats(): array
-    {
-        $total = $this->count();
-        $published = $this->countWhere('status', 'published');
-        $draft = $this->countWhere('status', 'draft');
+    // Create new post
+    public static function createPost($conn, $title, $slug, $content, $excerpt, $featured_image, $author_id, $category_id, $meta_title, $meta_description) {
 
-        return [
-            'total' => $total,
-            'published' => $published,
-            'draft' => $draft
-        ];
+        $sql = "INSERT INTO posts (title, slug, content, excerpt, featured_image, status, author_id, category_id, meta_title, meta_description, created_at) 
+                            VALUES (?, ?, ?, ?, ?, 'draft', ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "sssssiisss", $title, $slug, $content, $excerpt, $featured_image, $author_id, $category_id, $meta_title, $meta_description);
+
+        return mysqli_stmt_execute($stmt);
+    }
+
+    // Update post
+    public static function updatePost($conn, $id, $title, $slug, $content, $excerpt, $featured_image, $category_id, $meta_title, $meta_description, $status) {
+
+        $sql = "UPDATE posts 
+                SET title = ?, slug = ?, content = ?, excerpt = ?, featured_image = ?, category_id = ?, meta_title = ?, meta_description = ?, status = ?, updated_at = CURRENT_TIMESTAMP 
+                WHERE id = ?";
+
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "sssssiisssi", $title, $slug, $content, $excerpt, $featured_image, $category_id, $meta_title, $meta_description, $status, $id);
+
+        return mysqli_stmt_execute($stmt);
+    }
+
+    // Delete post
+    public static function deletePost($conn, $id) {
+
+        $sql = "DELETE FROM posts WHERE id = ?";
+
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "i", $id);
+
+        return mysqli_stmt_execute($stmt);
     }
 }
+
+?>
