@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' &&
             $stmt->close();
             $connection->close();
 
-            header('Location: ../views/users/profile.php');
+            header('Location: ../users/profile.php');
             exit;
         } else {
             $errorMessage = "Registration failed. Please try again.";

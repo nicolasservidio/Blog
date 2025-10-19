@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
                 }
 
                 // Redirects to the main panel
-                header('Location: ../views/users/profile.php');
+                header('Location: ../users/profile.php');
                 exit;
             }
             else {
