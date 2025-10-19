@@ -1,11 +1,15 @@
-<!--
+<?php 
+/*
  * ========================================================================
  * UNIVERSAL HEADER TEMPLATE — header.php
  * For PHP+MySQL MVC projects using Bootstrap
  * Author: Nicolás Servidio
  * ========================================================================
- * -->
-<?php 
+ *
+ */ 
+
+    require_once __DIR__ . '/../../../config/constants.php';
+
     if (session_status() === PHP_SESSION_NONE) { // Session starts only if not already active
         session_start();
     }
@@ -28,10 +32,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="assets/css/style.css" rel="stylesheet">  <!-- These paths will work correctly in both XAMPP and Railway, as long as the web server is configured to serve the "public/" folder as the document root -->
+    <link href="<?= BASE_PATH ?>assets/css/style.css" rel="stylesheet">  <!-- These paths will work correctly in both XAMPP and Railway, as long as the web server is configured to serve the "public/" folder as the document root -->
 
     <!-- Favicon -->
-    <link rel="icon" href="assets/img/logo.png" type="image/png">
+    <link rel="icon" href="<?= BASE_PATH ?>assets/img/logo.png" type="image/png">
 </head>
 
 <body>
@@ -57,7 +61,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Custom JS -->
-    <script src="assets/js/main.js"></script>
+    <script src="<?= BASE_PATH ?>assets/js/main.js"></script>
 
 </body>
 </html>

@@ -3,6 +3,7 @@ if (session_status() === PHP_SESSION_NONE) { // Session starts only if not alrea
     session_start();
 }
 
+require_once __DIR__ . '/../../config/constants.php';
 require_once __DIR__ . "/../../config/conn.php";
 require_once __DIR__ . "/../utils/validateUser.php";
 
@@ -60,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
                 }
 
                 // Redirects to the main panel
-                header('Location: ../users/profile.php');
+                header('Location: ' . BASE_PATH . 'index.php?page=users-profile');
                 exit;
             }
             else {

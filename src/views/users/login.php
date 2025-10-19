@@ -7,6 +7,13 @@
  * ============================================================================
  */
 
+require_once __DIR__ . '/../../../config/constants.php';
+
+if (basename($_SERVER['SCRIPT_FILENAME']) === basename(__FILE__)) {  // This automatically redirects if someone accesses the file directly.
+    header('Location: ' . BASE_PATH . 'index.php?page=users-login');
+    exit;
+}
+
 // Optional: set page title for <title> tag in main.php
 $pageTitle = 'Login';
 
@@ -52,7 +59,7 @@ ob_start();
 
                         <div class="mt-3 text-center">
                             <p class="text-touch-muted">Don't have an account?
-                                <a href="/src/views/users/register.php">Sign up here</a>.
+                                <a href="<?= BASE_PATH ?>index.php?page=users-register">Sign up here</a>.
                             </p>
                         </div>
                     </div>

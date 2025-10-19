@@ -1,4 +1,6 @@
 <?php
+
+require_once __DIR__ . '/../../config/constants.php';
 require_once __DIR__ . "/../../config/conn.php";
 require_once __DIR__ . "/../utils/validateUser.php";
 
@@ -68,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' &&
             $stmt->close();
             $connection->close();
 
-            header('Location: ../users/profile.php');
+            header('Location: ' . BASE_PATH . 'index.php?page=users-profile');
             exit;
         } else {
             $errorMessage = "Registration failed. Please try again.";

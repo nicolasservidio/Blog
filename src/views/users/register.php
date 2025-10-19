@@ -1,4 +1,12 @@
 <?php
+
+require_once __DIR__ . '/../../../config/constants.php';
+
+if (basename($_SERVER['SCRIPT_FILENAME']) === basename(__FILE__)) {  // This automatically redirects if someone accesses the file directly.
+    header('Location: ' . BASE_PATH . 'index.php?page=users-register');
+    exit;
+}
+
 $pageTitle = 'Sign Up';
 
 // Include controller logic directly (like login.php)
@@ -58,7 +66,7 @@ ob_start();
 
                         <div class="mt-3 text-center">
                             <p class="text-touch-muted">Already have an account?
-                                <a href="login.php">Login here</a>.
+                                <a href="<?= BASE_PATH ?>index.php?page=users-login">Login here</a>.
                             </p>
                         </div>
                     </div>

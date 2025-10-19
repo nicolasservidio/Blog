@@ -1,4 +1,7 @@
 <?php
+
+require_once __DIR__ . '/../config/constants.php';
+
 // Start session once for all routes
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -8,18 +11,18 @@ if (session_status() === PHP_SESSION_NONE) {
 $baseViewPath = __DIR__ . '/../src/views/';
 
 // Determine requested page
-$page = $_GET['page'] ?? 'login'; // Default to login
+$page = $_GET['page'] ?? 'users-login'; // Default to login
 
 // Route map
 $routes = [
-    'login'             => $baseViewPath . 'users/login.php',
-    'register'          => $baseViewPath . 'users/register.php',
-    'profile'           => $baseViewPath . 'users/profile.php',
-    'create-post'       => $baseViewPath . 'posts/create.php',
-    'index-post'        => $baseViewPath . 'posts/index.php',
-    'show-post'         => $baseViewPath . 'posts/show.php',
-    'index-categories'  => $baseViewPath . 'categories/index.php',
-    'show-categories'   => $baseViewPath . 'categories/show.php',
+    'users-login'             => $baseViewPath . 'users/login.php',
+    'users-register'          => $baseViewPath . 'users/register.php',
+    'users-profile'           => $baseViewPath . 'users/profile.php',
+    'post-create'       => $baseViewPath . 'posts/create.php',
+    'post-index'        => $baseViewPath . 'posts/index.php',
+    'post-show'         => $baseViewPath . 'posts/show.php',
+    'categories-index'  => $baseViewPath . 'categories/index.php',
+    'categories-show'   => $baseViewPath . 'categories/show.php',
     // Add more views here as needed
 ];
 

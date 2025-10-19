@@ -1,4 +1,12 @@
 <?php
+
+require_once __DIR__ . '/../../../config/constants.php';
+
+if (basename($_SERVER['SCRIPT_FILENAME']) === basename(__FILE__)) {  // This automatically redirects if someone accesses the file directly.
+    header('Location: ' . BASE_PATH . 'index.php?page=users-profile');
+    exit;
+}
+
 $pageTitle = 'Your Profile';
 ob_start();
 
@@ -39,7 +47,7 @@ $user = $_SESSION['user'];
                         </ul>
 
                         <div class="mt-4 text-center">
-                            <a href="../../controllers/UserController.php?action=logout" class="btn btn-outline-danger">Sign Out</a>
+                            <a href="#" class="btn btn-outline-danger">Sign Out</a>
                         </div>
                     </div>
                 </div>
