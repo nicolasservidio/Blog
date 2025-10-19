@@ -7,6 +7,7 @@
  * ============================================================================
  */
 
+session_start();
 // Optional: set page title for <title> tag in main.php
 $pageTitle = 'Login';
 
