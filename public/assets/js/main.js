@@ -213,117 +213,245 @@ function initFormValidation() {
 
 /* === 9. CAROUSEL LOGIC === */
 function initCarousel() {
-  const container = $('.carousel-container');
-  const track = $('.carousel-track', container);
-  const slides = $$('.carousel-slide', track);
-  const prevBtn = $('.carousel-button.prev', container);
-  const nextBtn = $('.carousel-button.next', container);
-
-  let currentIndex = 0;
-
-  const updateCarousel = () => {
-    const offset = -currentIndex * container.offsetWidth;
-    track.style.transform = translateX(${offset}px);
-  };
-
-  const goToSlide = (index) => {
-    currentIndex = (index + slides.length) % slides.length;
+    const container = $('.carousel-container');
+    const track = $('.carousel-track', container);
+    const slides = $$('.carousel-slide', track);
+    const prevBtn = $('.carousel-button.prev', container);
+    const nextBtn = $('.carousel-button.next', container);
+  
+    let currentIndex = 0;
+  
+    const updateCarousel = () => {
+      const offset = -currentIndex * container.offsetWidth;
+      track.style.transform = `translateX(${offset}px)`;
+    };
+  
+    const goToSlide = (index) => {
+      currentIndex = (index + slides.length) % slides.length;
+      updateCarousel();
+    };
+  
+    nextBtn?.addEventListener('click', () => goToSlide(currentIndex + 1));
+    prevBtn?.addEventListener('click', () => goToSlide(currentIndex - 1));
+  
+    window.addEventListener('resize', debounce(updateCarousel, 200));
     updateCarousel();
-  };
-
-  nextBtn?.addEventListener('click', () => goToSlide(currentIndex + 1));
-  prevBtn?.addEventListener('click', () => goToSlide(currentIndex - 1));
-
-  window.addEventListener('resize', debounce(updateCarousel, 200));
-  updateCarousel();
-}
-
-/* === 10. PERFORMANCE TRACING === */
-function tracePerformance(label, color = 'green') {
-  const marker = document.createElement('div');
-  marker.className = 'trace-step';
-  marker.style.borderLeftColor = color;
-  marker.textContent = [TRACE] ${label};
-  document.body.appendChild(marker);
-  setTimeout(() => marker.remove(), 3000);
-}
-
-function traceStart(label) {
-  const marker = document.createElement('div');
-  marker.className = 'trace-start';
-  marker.textContent = [START] ${label};
-  document.body.appendChild(marker);
-}
-
-function traceEnd(label) {
-  const marker = document.createElement('div');
-  marker.className = 'trace-end';
-  marker.textContent = [END] ${label};
-  document.body.appendChild(marker);
-}
-
-/* === 11. DEBUG OVERLAYS === */
-function initDebugOverlay() {
-  const overlay = document.createElement('div');
-  overlay.className = 'debug-overlay';
-  document.body.appendChild(overlay);
-
-  $$('.debug-box').forEach(box => {
-    box.addEventListener('mouseenter', () => {
-      box.style.backgroundColor = 'rgba(0,123,255,0.1)';
-      box.style.borderColor = '#007bff';
+  }
+  
+  /* === 10. PERFORMANCE TRACING === */
+  function tracePerformance(label, color = 'green') {
+    const marker = document.createElement('div');
+    marker.className = 'trace-step';
+    marker.style.borderLeftColor = color;
+    marker.textContent = `[TRACE] ${label}`;
+    document.body.appendChild(marker);
+    setTimeout(() => marker.remove(), 3000);
+  }
+  
+  function traceStart(label) {
+    const marker = document.createElement('div');
+    marker.className = 'trace-start';
+    marker.textContent = `[START] ${label}`;
+    document.body.appendChild(marker);
+  }
+  
+  function traceEnd(label) {
+    const marker = document.createElement('div');
+    marker.className = 'trace-end';
+    marker.textContent = `[END] ${label}`;
+    document.body.appendChild(marker);
+  }
+  
+  /* === 11. DEBUG OVERLAYS === */
+  function initDebugOverlay() {
+    const overlay = document.createElement('div');
+    overlay.className = 'debug-overlay';
+    document.body.appendChild(overlay);
+  
+    $$('.debug-box').forEach(box => {
+      box.addEventListener('mouseenter', () => {
+        box.style.backgroundColor = 'rgba(0,123,255,0.1)';
+        box.style.borderColor = '#007bff';
+      });
+      box.addEventListener('mouseleave', () => {
+        box.style.backgroundColor = 'rgba(0,123,255,0.05)';
+        box.style.borderColor = 'rgba(0,123,255,0.5)';
+      });
     });
-    box.addEventListener('mouseleave', () => {
-      box.style.backgroundColor = 'rgba(0,123,255,0.05)';
-      box.style.borderColor = 'rgba(0,123,255,0.5)';
+  }
+  
+  /* === 12. ACCESSIBILITY ENHANCEMENTS === */
+  function initAccessibility() {
+    $$('.skip-link').forEach(link => {
+      link.addEventListener('focus', () => {
+        link.style.top = '0';
+      });
+      link.addEventListener('blur', () => {
+        link.style.top = '-40px';
+      });
     });
-  });
-}
-
-/* === 12. ACCESSIBILITY ENHANCEMENTS === */
-function initAccessibility() {
-  $$('.skip-link').forEach(link => {
-    link.addEventListener('focus', () => {
-      link.style.top = '0';
+  
+    $$('.nav-link, .btn, .dropdown-toggle').forEach(el => {
+      el.setAttribute('tabindex', '0');
+      el.setAttribute('role', 'button');
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          el.click();
+        }
+      });
     });
-    link.addEventListener('blur', () => {
-      link.style.top = '-40px';
-    });
-  });
-
-  $$('.nav-link, .btn, .dropdown-toggle').forEach(el => {
-    el.setAttribute('tabindex', '0');
-    el.setAttribute('role', 'button');
-    el.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        el.click();
-      }
-    });
-  });
-}
-
-/* === 13. EXPORT HOOKS === */
-function markModuleComplete(name) {
-  const flag = document.createElement('div');
-  flag.className = 'module-complete';
-  flag.textContent = [MODULE COMPLETE] ${name};
-  document.body.appendChild(flag);
-}
-
-function markModuleIncomplete(name) {
-  const flag = document.createElement('div');
-  flag.className = 'module-incomplete';
-  flag.textContent = [MODULE INCOMPLETE] ${name};
-  document.body.appendChild(flag);
-}
-
-function markModuleError(name, message) {
-  const flag = document.createElement('div');
-  flag.className = 'module-error';
-  flag.textContent = [ERROR] ${name}: ${message};
-  document.body.appendChild(flag);
-}
+  }
+  
+  /* === 13. EXPORT HOOKS === */
+  function markModuleComplete(name) {
+    const flag = document.createElement('div');
+    flag.className = 'module-complete';
+    flag.textContent = `[MODULE COMPLETE] ${name}`;
+    document.body.appendChild(flag);
+  }
+  
+  function markModuleIncomplete(name) {
+    const flag = document.createElement('div');
+    flag.className = 'module-incomplete';
+    flag.textContent = `[MODULE INCOMPLETE] ${name}`;
+    document.body.appendChild(flag);
+  }
+  
+  function markModuleError(name, message) {
+    const flag = document.createElement('div');
+    flag.className = 'module-error';
+    flag.textContent = `[ERROR] ${name}: ${message}`;
+    document.body.appendChild(flag);
+  }
+  
 
 
 /* === Part 4: Delegation, AJAX, Autosave, Plugins, Audit === */
+
+/* === 14. EVENT DELEGATION FOR DYNAMIC CONTENT === */
+function initDelegatedEvents() {
+    document.body.addEventListener('click', (e) => {
+      const target = e.target.closest('[data-action]');
+      if (!target) return;
+  
+      const action = target.getAttribute('data-action');
+      switch (action) {
+        case 'open-modal':
+          const modalId = target.getAttribute('data-target');
+          const modal = document.getElementById(modalId);
+          if (modal) modal.style.display = 'flex';
+          break;
+  
+        case 'toggle-theme':
+          initThemeSwitcher();
+          break;
+  
+        case 'trace-step':
+          tracePerformance(target.getAttribute('data-label') || 'Unnamed Step');
+          break;
+  
+        default:
+          console.warn(`[UNHANDLED ACTION] ${action}`);
+      }
+    });
+  }
+  
+  /* === 15. AJAX SCHEMA (FETCH WRAPPER) === */
+  function ajaxRequest({ url, method = 'GET', data = null, headers = {} }) {
+    const options = {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        ...headers
+      }
+    };
+    if (data) options.body = JSON.stringify(data);
+  
+    return fetch(url, options)
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .catch(err => {
+        console.error(`[AJAX ERROR] ${err.message}`);
+        markModuleError('AJAX', err.message);
+      });
+  }
+  
+  /* === 16. FORM AUTOSAVE (LOCALSTORAGE) === */
+  function initFormAutosave() {
+    $$('.form-accessible[data-autosave]').forEach(form => {
+      const formId = form.getAttribute('id') || form.getAttribute('data-autosave');
+      const storageKey = `form-autosave-${formId}`;
+  
+      // Load saved data
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        try {
+          const values = JSON.parse(saved);
+          $$('input, textarea, select', form).forEach(input => {
+            if (values[input.name]) input.value = values[input.name];
+          });
+        } catch (e) {
+          console.warn(`[AUTOSAVE LOAD ERROR] ${e.message}`);
+        }
+      }
+  
+      // Save on input
+      form.addEventListener('input', debounce(() => {
+        const values = {};
+        $$('input, textarea, select', form).forEach(input => {
+          values[input.name] = input.value;
+        });
+        localStorage.setItem(storageKey, JSON.stringify(values));
+      }, 500));
+    });
+  }
+  
+  /* === 17. MODULAR PLUGIN ARCHITECTURE === */
+  const PluginRegistry = {};
+  
+  function registerPlugin(name, fn) {
+    if (typeof fn !== 'function') {
+      console.error(`[PLUGIN ERROR] ${name} is not a function`);
+      return;
+    }
+    PluginRegistry[name] = fn;
+    console.log(`[PLUGIN REGISTERED] ${name}`);
+  }
+  
+  function runPlugins() {
+    Object.entries(PluginRegistry).forEach(([name, fn]) => {
+      try {
+        fn();
+        markModuleComplete(`Plugin: ${name}`);
+      } catch (e) {
+        console.error(`[PLUGIN FAILED] ${name}: ${e.message}`);
+        markModuleError(`Plugin: ${name}`, e.message);
+      }
+    });
+  }
+  
+  /* === 18. FINAL AUDIT & EXPORT BUNDLING === */
+  function finalizeAudit() {
+    traceStart('Final Audit');
+    runPlugins();
+    traceEnd('Final Audit');
+  
+    const exportFlag = document.createElement('div');
+    exportFlag.className = 'export-ready';
+    exportFlag.textContent = '[EXPORT READY] main.js is complete and modular.';
+    document.body.appendChild(exportFlag);
+  }
+  
+
+/*
+This is a universal, extensible, and production-ready JavaScript foundation template. It’s built to:
+
+- Be reused across multiple projects  
+- Integrate seamlessly with CSS and PHP views of the MVC architecture 
+- Support future modules without rewriting core logic  
+- Maintain auditability and performance tracing
+
+*/
