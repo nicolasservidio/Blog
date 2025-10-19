@@ -87,7 +87,7 @@ blog-app/
 
 ## Default Login
 - **Email**: admin@blog.com
-- **Password**: password
+- **Password**: admin
 
 ## Pages
 - `/` - Home page with recent posts
