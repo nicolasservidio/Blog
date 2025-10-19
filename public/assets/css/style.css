@@ -1418,3 +1418,456 @@ img {
 }
 
 
+/* === Part 6.1: Resume & Invoice Print Templates === */
+
+/* === 44. PRINT-FRIENDLY RESUME TEMPLATE === */
+
+.resume-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    color: #212529;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 11pt;
+    line-height: 1.5;
+}
+
+.resume-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.resume-header h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.25rem;
+}
+
+.resume-header p {
+    font-size: 0.95rem;
+    color: #6c757d;
+}
+
+.resume-section {
+    margin-bottom: 1.5rem;
+}
+
+.resume-section h2 {
+    font-size: 1.25rem;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 0.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.resume-entry {
+    margin-bottom: 1rem;
+}
+
+.resume-entry h3 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.resume-entry p {
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+/* === 45. PRINT-FRIENDLY INVOICE TEMPLATE === */
+
+.invoice-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    color: #212529;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 10pt;
+}
+
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.invoice-header h1 {
+    font-size: 1.5rem;
+}
+
+.invoice-meta {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+.invoice-table th,
+.invoice-table td {
+    border: 1px solid #dee2e6;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.invoice-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.invoice-total {
+    text-align: right;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #212529;
+}
+
+/* === 46. PRINT OVERRIDES === */
+
+@media print {
+    .resume-container,
+    .invoice-container {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .resume-header,
+    .invoice-header {
+        text-align: left;
+    }
+
+    .btn,
+    .navbar-custom,
+    .footer,
+    .alert-custom,
+    .modal-custom {
+        display: none !important;
+    }
+}
+
+
+/* === Part 6.2: Accessibility Forms, Theme Switching, Bootstrap Overrides, Scroll Animations === */
+
+/* === 47. ACCESSIBILITY-FIRST FORM LAYOUTS === */
+
+.form-accessible {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.form-accessible label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #212529;
+    margin-bottom: 0.25rem;
+}
+
+.form-accessible input,
+.form-accessible select,
+.form-accessible textarea {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: var(--border-radius-sm);
+    background-color: #fff;
+    color: #212529;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.form-accessible input:focus,
+.form-accessible select:focus,
+.form-accessible textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    outline: none;
+}
+
+.form-accessible .form-description {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-top: -0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-accessible .form-error {
+    font-size: 0.85rem;
+    color: var(--color-danger);
+    margin-top: 0.25rem;
+}
+
+/* === 48. THEME SWITCHING VIA CSS VARIABLES === */
+
+:root {
+    --theme-bg: #ffffff;
+    --theme-text: #212529;
+    --theme-accent: #0d6efd;
+    --theme-muted: #6c757d;
+    --theme-border: #dee2e6;
+}
+
+[data-theme="dark"] {
+    --theme-bg: #121212;
+    --theme-text: #e0e0e0;
+    --theme-accent: #90caf9;
+    --theme-muted: #b0b0b0;
+    --theme-border: #2c2c2c;
+}
+
+body {
+    background-color: var(--theme-bg);
+    color: var(--theme-text);
+}
+
+a {
+    color: var(--theme-accent);
+}
+
+a:hover {
+    color: darken(var(--theme-accent), 10%);
+}
+
+.border-theme {
+    border-color: var(--theme-border) !important;
+}
+
+.text-muted-theme {
+    color: var(--theme-muted) !important;
+}
+
+/* === 49. BOOTSTRAP v5.3 OVERRIDES === */
+
+/* Override .btn-primary */
+.btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    font-weight: 500;
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--border-radius-sm);
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #0a58ca;
+    border-color: #0a58ca;
+}
+
+/* Override .form-control */
+.form-control {
+    border-radius: var(--border-radius-sm);
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ced4da;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Override .navbar */
+.navbar {
+    padding: 0.75rem 1rem;
+    background-color: var(--color-primary);
+}
+
+.navbar-brand,
+.navbar-nav .nav-link {
+    color: #ffffff !important;
+    font-weight: 500;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #e2e6ea !important;
+}
+
+/* === 50. ANIMATION CHAINING & SCROLL EFFECTS === */
+
+.scroll-fade {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-fade.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.scroll-scale {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.scroll-slide-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-slide-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.scroll-slide-right {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-slide-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
+/* === Part 7.1: Landing Page Grids, Hero, CTA, Testimonials === */
+
+/* === 51. LANDING PAGE GRID === */
+
+.landing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    padding: 3rem 1rem;
+}
+
+.landing-section {
+    background-color: #ffffff;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    padding: 2rem;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.landing-section:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.landing-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-primary);
+}
+
+.landing-section p {
+    font-size: 1rem;
+    color: #6c757d;
+}
+
+/* === 52. HERO SECTION === */
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
+    color: #ffffff;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+}
+
+.hero .btn {
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius-md);
+}
+
+/* === 53. CALL-TO-ACTION BLOCK === */
+
+.cta-block {
+    background-color: #f8f9fa;
+    padding: 3rem 2rem;
+    text-align: center;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.cta-block h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--color-primary);
+}
+
+.cta-block p {
+    font-size: 1.1rem;
+    color: #495057;
+    margin-bottom: 2rem;
+}
+
+.cta-block .btn {
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+}
+
+/* === 54. TESTIMONIALS === */
+
+.testimonials {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 3rem 1rem;
+}
+
+.testimonial-card {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: var(--border-radius-md);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.testimonial-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.testimonial-card img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.testimonial-card h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+}
+
+.testimonial-card p {
+    font-size: 0.95rem;
+    color: #6c757d;
+}
+
+
