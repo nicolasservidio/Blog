@@ -35,7 +35,7 @@ ob_start();
                             require_once __DIR__ . "/../../controllers/LoginController.php";
                         ?>
 
-                        <form action="login.php" method="POST" class="form-accessible" data-autosave="login-form">
+                        <form action="<?= BASE_PATH ?>index.php?page=users-login" method="POST" class="form-accessible" data-autosave="login-form">
                             <input type="hidden" name="action" value="login">
 
                             <div class="form-group">

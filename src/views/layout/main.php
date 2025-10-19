@@ -8,8 +8,6 @@
  *
  */ 
 
-    require_once __DIR__ . '/../../../config/constants.php';
-
     if (session_status() === PHP_SESSION_NONE) { // Session starts only if not already active
         session_start();
     }
@@ -36,6 +34,10 @@
 
     <!-- Favicon -->
     <link rel="icon" href="<?= BASE_PATH ?>assets/img/logo.png" type="image/png">
+
+    <script>
+        const BASE_PATH = "<?= BASE_PATH ?>"; /* To make the main.js file able to use absolute paths */ 
+    </script>
 </head>
 
 <body>
