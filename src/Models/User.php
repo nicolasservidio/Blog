@@ -86,10 +86,10 @@ class User {
         return null;
     }
 
-    // Create new user
+    // Create new user (i.e., author of the blog)
     public static function createUser($conn, $name, $email, $password, $role = 'user', $status = 'active') {
         
-        $sql = "INSERT INTO users (name, email, password, role, status) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO users (name, email, password, role, status) VALUES (?, ?, ?, ?, ?)";  // Well, in reality... role and status are predefined by default in the DB, but here I show that those values can also be predefined from here, the model layer code
 
         $stmt = mysqli_prepare($conn, $sql);
 
@@ -97,7 +97,7 @@ class User {
         return mysqli_stmt_execute($stmt);
     }
 
-    // Update user profile
+    // Update user profile (i.e., just the name, avatar and bio)
     public static function updateProfile($conn, $id, $name, $avatar, $bio) {
 
         $sql = "UPDATE users SET name = ?, avatar = ?, bio = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
@@ -108,10 +108,32 @@ class User {
         return mysqli_stmt_execute($stmt);
     }
 
-    // Delete user
+    // Update user credentials (i.e., just the email and password)
+    public static function updateCredentials($conn, $id, $email, $password) {
+
+        $sql = "UPDATE users SET email = ?, password = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
+
+        $stmt = mysqli_prepare($conn, $sql);
+
+        mysqli_stmt_bind_param($stmt, "ssi", $email, $password, $id);
+        return mysqli_stmt_execute($stmt);
+    }
+
+    // Update full user data (i.e., name, email, password, avatar and bio). Optional, for admin-level
+    public static function updateFull($conn, $id, $name, $email, $password, $role, $avatar, $bio, $status) {
+
+        $sql = "UPDATE users SET name = ?, email = ?, password = ?, role = ?, avatar = ?, bio = ?, status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
+
+        $stmt = mysqli_prepare($conn, $sql);
+
+        mysqli_stmt_bind_param($stmt, "sssssssi", $name, $email, $password, $role, $avatar, $bio, $status, $id);
+        return mysqli_stmt_execute($stmt);
+    }
+
+    // Delete user. This to perform a logical deletion instead of a physical one
     public static function deleteUser($conn, $id) {
 
-        $sql = "DELETE FROM users WHERE id = ?";
+        $sql = "UPDATE users SET status = 'inactive' WHERE id = ?";
 
         $stmt = mysqli_prepare($conn, $sql);
         
