@@ -38,22 +38,56 @@ A simple, clean blog system built with PHP and MySQL. No frameworks, no complex 
 ## Project Structure
 
 ```
-Blog/
-├── public/
-│   ├── index.php          # Main entry point
-│   ├── .htaccess          # Apache URL rewriting
-│   └── assets/            # CSS, JS, images
+blog-app/
+├── public/                      # Entry point for Railway (index.php)
+│   ├── index.php                # Main router or homepage
+│   ├── assets/                  # Public static files
+│   │   ├── css/
+│   │   │   └── style.css
+│   │   ├── js/
+│   │   │   └── main.js
+│   │   └── img/
+│   │       └── logo.png
 ├── src/
-│   └── Views/             # Simple PHP templates
-├── database/
-│   ├── migrations/        # SQL table creation
-│   └── seeds/             # SQL sample data
-└── railway.json           # Railway config
+│   ├── controllers/             # Procedural controllers
+│   │   ├── UserController.php
+│   │   ├── CategoryController.php
+│   │   └── PostController.php
+│   ├── views/                   # Views (HTML + embedded PHP)
+│   │   ├── users/
+│   │   │   ├── login.php
+│   │   │   ├── register.php
+│   │   │   └── profile.php
+│   │   ├── categories/
+│   │   │   ├── index.php
+│   │   │   └── show.php
+│   │   ├── posts/
+│   │   │   ├── index.php
+│   │   │   ├── show.php
+│   │   │   └── create.php
+│   │   └── layout/              # Shared layout components
+│   │       ├── header.php
+│   │       └── footer.php
+│   └── models/                  # OOP classes only
+│       ├── User.php
+│       ├── Category.php
+│       └── Post.php
+├── config/                      # Configuration files
+│   └── conn.php                 # MySQL connection logic
+├── database/                    # DB structure and seed data
+│   ├── migrations/
+│   │   ├── 001_create_users_table.sql
+│   │   ├── 002_create_categories_table.sql
+│   │   └── 003_create_posts_table.sql
+│   ├── seeds/
+│   │   ├── 001_admin_user.sql
+│   │   └── 002_sample_categories.sql
+├── README.md                    # Project documentation
 ```
 
 ## Default Login
 - **Email**: admin@blog.com
-- **Password**: password
+- **Password**: admin
 
 ## Pages
 - `/` - Home page with recent posts
