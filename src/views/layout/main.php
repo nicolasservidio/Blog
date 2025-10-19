@@ -1,3 +1,11 @@
+<!--
+ * ========================================================================
+ * UNIVERSAL HEADER TEMPLATE — header.php
+ * For PHP+MySQL MVC projects using Bootstrap
+ * Author: Nicolás Servidio
+ * ========================================================================
+ * -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
