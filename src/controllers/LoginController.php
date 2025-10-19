@@ -1,27 +1,43 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) { // Session starts only if not already active
-    session_start();
-}
 
 require_once __DIR__ . '/../../config/constants.php';
 require_once __DIR__ . "/../../config/conn.php";
 require_once __DIR__ . "/../utils/validateUser.php";
 
 
+if (session_status() === PHP_SESSION_NONE) { // Session starts only if not already active
+    session_start();
+}
+
+
+echo '<pre>';
+print_r($_SERVER);
+print_r($_POST);
+echo '</pre>';
+exit;
+
 // Initialize the error variable
 $errorMessage = '';
 $validations = '';
 
+echo "Inicio del controlador<br>"; //1
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_POST['password'])) {
+    echo "POST recibido<br>"; //2
+
 
     $tbl_name = "users"; // Table name in the DB 
     $validations = validateUser();
+    echo "Validaciones ejecutadas: $validations<br>"; //3
 
     if (empty($validations)) {
 
         $email = $_POST['email'];  // Email entered, processed and validated
         $password = $_POST['password']; // Password entered, processed and validated
-    
+        echo "Email recibido: $email<br>"; //4
+
+
         $connection = connectDB();
     
         // Secure query: fetch user by email and password, no cryptography since this is just a demo
@@ -30,15 +46,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
         $stmt->execute();
         $result = $stmt->get_result();
 
-        $stmt->close();
-        $connection->close();
-
         if ($result->num_rows === 1) {
             $user = $result->fetch_assoc();
+
+            $stmt->close();
+            $connection->close();
 
             // Verify password securely
             if ($password == $user['password']) { // this is just for the demo, since we are not using cryptographic validations here, but you should
 
+                unset($_SESSION['user']); // Pre-session cleanup. This prevents residual data from being left behind if the login is repeated.
                 // Store user data in session (compatible with header.php)
                 $_SESSION['user'] = [
                     'id' => $user['id'],
@@ -53,11 +70,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
                 ];
 
                 // Optional role label overrides
-                if ($_SESSION['user']['role'] === 'admin') {
-                    $_SESSION['user']['role'] = 'Sr Administrator';
-                }
-                if ($_SESSION['user']['role'] != 'admin') {
-                    $_SESSION['user']['role'] = 'Sr Author';
+                switch ($user['role']) {
+                    case 'admin':
+                        $_SESSION['user']['role'] = 'Sr Administrator';
+                        break;
+                    default:
+                        $_SESSION['user']['role'] = 'Sr Author';
+                        break;
                 }
 
                 // Redirects to the main panel
@@ -77,12 +96,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
     }
 }
 
-
 // Alert placeholder for login.php
-if (!empty($errorMessage)): ?>
-    <div class="alert-custom alert-error">
-        <?= htmlspecialchars($errorMessage) ?>
-        <?= htmlspecialchars($validations) ?>
-    </div>
-<?php endif; ?>
-
+if (!empty($errorMessage)) {
+    $_SESSION['login_error'] = $errorMessage;
+    $_SESSION['login_validations'] = $validations;
+    $_SESSION['login_email'] = $_POST['email']; // This for the field in the form!
+    header('Location: ' . BASE_PATH . 'index.php?page=users-login');
+    exit;
+}

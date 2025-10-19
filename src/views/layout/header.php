@@ -44,7 +44,7 @@ $username = $isLoggedIn && isset($_SESSION['user']['name'])
                         <span class="dropdown-toggle cursor-pointer" tabindex="0" role="button">👤 <?= $username ?></span>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="<?= BASE_PATH ?>index.php?page=users-profile">Profile</a>
-                            <a class="dropdown-item" href="#">Sign out</a>
+                            <a class="dropdown-item" href="<?= BASE_PATH ?>index.php?page=users-logout">Sign out</a>
                         </div>
                     </li>
                 <?php else: ?>

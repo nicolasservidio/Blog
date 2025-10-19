@@ -15,9 +15,11 @@ $page = $_GET['page'] ?? 'users-login'; // Default to login
 
 // Route map
 $routes = [
+    'login-action'            => __DIR__ . '/../src/controllers/LoginController.php',
     'users-login'             => $baseViewPath . 'users/login.php',
     'users-register'          => $baseViewPath . 'users/register.php',
     'users-profile'           => $baseViewPath . 'users/profile.php',
+    'users-logout'            => $baseViewPath . 'users/logout.php',
     'post-create'       => $baseViewPath . 'posts/create.php',
     'post-index'        => $baseViewPath . 'posts/index.php',
     'post-show'         => $baseViewPath . 'posts/show.php',
@@ -28,8 +30,13 @@ $routes = [
 
 // Validate and include
 if (array_key_exists($page, $routes)) {
-    require_once $routes[$page];
+    // Detect if it's a controller (logical action) or a view (page to be seen)
+    if (str_ends_with($page, '-action')) {
+        include $routes[$page]; // Run the controller
+        exit; // Prevents additional layout or content from loading
+    } else {
+        require_once $routes[$page]; // Load the view in a normal way
+    }
 } else {
-    // Fallback for unknown routes
     echo '<div class="alert-custom alert-error text-center">404 — Page not found</div>';
 }
