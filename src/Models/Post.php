@@ -75,6 +75,50 @@ class Post {
         return null;
     }
 
+    // Get all posts by an author
+    public static function getByAuthor($conn, $author_id) {
+        $List = array();
+        $sql = "SELECT id, title, slug, status, created_at FROM posts WHERE author_id = ? AND status != 'archived' ORDER BY created_at DESC";
+    
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "i", $author_id);
+
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+    
+        while ($data = mysqli_fetch_array($result)) {
+            $List[] = $data;
+        }
+    
+        return $List;
+    }
+
+    // Get all posts by author and status of the post
+    public static function getByAuthorAndStatus($conn, $author_id, $status = null) {
+        $List = array();
+    
+        if ($status && in_array($status, ['draft', 'published', 'archived'])) {
+            
+            $sql = "SELECT id, title, slug, status, created_at FROM posts WHERE author_id = ? AND status = ? ORDER BY created_at DESC";
+            $stmt = mysqli_prepare($conn, $sql);
+            mysqli_stmt_bind_param($stmt, "is", $author_id, $status);
+        } 
+        else {
+            $sql = "SELECT id, title, slug, status, created_at FROM posts WHERE author_id = ? AND status != 'archived' ORDER BY created_at DESC";
+            $stmt = mysqli_prepare($conn, $sql);
+            mysqli_stmt_bind_param($stmt, "i", $author_id);
+        }
+    
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+    
+        while ($data = mysqli_fetch_array($result)) {
+            $List[] = $data;
+        }
+    
+        return $List;
+    }
+
     // Create new post
     public static function createPost($conn, $title, $slug, $content, $excerpt, $featured_image, $author_id, $category_id, $meta_title, $meta_description) {
 

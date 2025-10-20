@@ -15,6 +15,18 @@ class PostController {
         return $List;
     }
 
+    // Get all blog posts by author
+    public static function getByAuthor($conn, $author_id) {
+
+        return Post::getByAuthor($conn, $author_id);
+    }
+
+    // Get posts by author and optional status
+    public static function getByAuthorAndStatus($conn, $author_id, $status = null) {
+        
+        return Post::getByAuthorAndStatus($conn, $author_id, $status);
+    }
+
     // Prepare data for post creation. The method "create()" is the MVC controller method that prepares the form for creating a new resource
     public static function create($conn) {
 
@@ -59,6 +71,7 @@ class PostController {
         $result = Post::deletePost($conn, $id);
         return $result;
     }
+
 }
 
 ?>

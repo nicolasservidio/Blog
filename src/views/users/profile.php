@@ -19,12 +19,25 @@ if (!isset($_SESSION['user']) || !is_array($_SESSION['user'])) {
 }
 
 $user = $_SESSION['user'];
+
+// Getting all the blog posts by the logged-in author
+require_once __DIR__ . '/../../../config/conn.php';
+$conn = connectDB();
+
+require_once __DIR__ . '/../../controllers/PostController.php';
+
+$statusFilter = $_GET['status'] ?? null; // for classification of posts by status
+$userPosts = PostController::getByAuthorAndStatus($conn, $user['id'], $statusFilter); // Getting blog posts and status of each one
+$postCount = count($userPosts);
+
 ?>
 
 <section class="section section-light fade-in">
     <div class="container" id="main-content">
         <div class="row justify-content-center">
             <div class="col-md-8">
+
+                <!-- Profile card of the user -->
                 <div class="card-custom">
                     <div class="card-header text-center">
                         <h2 class="mb-0">Welcome, <?= htmlspecialchars($user['name']) ?></h2>
@@ -46,6 +59,40 @@ $user = $_SESSION['user'];
                         </div>
                     </div>
                 </div>
+
+                <!-- Author posts -->
+                <?php if (!empty($userPosts)): ?>
+                    <section class="mt-5">
+                        
+                        <h3 class="text-center">📝 Your Posts (<?= $postCount ?>)</h3>
+
+                        <form method="GET" action="<?= BASE_PATH ?>index.php" class="text-center mb-3">
+                            <input type="hidden" name="page" value="users-profile">
+                            <label for="status" class="form-label">Filter by status:</label>
+                            <select name="status" id="status" onchange="this.form.submit()" class="form-select w-auto d-inline-block">
+                                <option value="" <?= ($statusFilter === null || $statusFilter === '') ? 'selected' : '' ?>>All (except archived)</option>
+                                <option value="draft" <?= ($statusFilter === 'draft') ? 'selected' : '' ?>>Draft</option>
+                                <option value="published" <?= ($statusFilter === 'published') ? 'selected' : '' ?>>Published</option>
+                                <option value="archived" <?= ($statusFilter === 'archived') ? 'selected' : '' ?>>Archived</option>
+                            </select>
+                        </form>
+                        
+                        <ul class="list-group list-group-flush">
+                            <?php foreach ($userPosts as $post): ?>
+                                <li class="list-group-item">
+                                    <a href="<?= BASE_PATH ?>index.php?page=post-show&id=<?= $post['id'] ?>">
+                                        <?= htmlspecialchars($post['title']) ?>
+                                    </a> <br>
+                                    <span class="badge bg-secondary"><?= htmlspecialchars($post['status']) ?></span>
+                                    <small class="text-muted float-end">Created at: <?= htmlspecialchars($post['created_at']) ?></small>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </section>
+                <?php else: ?>
+                    <p class="text-center mt-4 text-muted">No posts found for this filter.</p>
+                <?php endif; ?>
+
             </div>
         </div>
     </div>
