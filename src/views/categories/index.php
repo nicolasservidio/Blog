@@ -18,6 +18,17 @@ ob_start();
 
 <section class="section section-light fade-in">
     <div class="container" id="main-content">
+
+        <?php if (isset($_SESSION['category_success'])): ?>
+            <div class="alert alert-success text-center"><?= htmlspecialchars($_SESSION['category_success']) ?></div>
+            <?php unset($_SESSION['category_success']); ?>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['category_error'])): ?>
+            <div class="alert alert-danger text-center"><?= htmlspecialchars($_SESSION['category_error']); ?></div>
+            <?php unset($_SESSION['category_error']); ?>
+        <?php endif; ?>
+
         <h2 class="text-center mb-4">📚 Blog Categories</h2>
 
         <?php if (!empty($categories)): ?>
