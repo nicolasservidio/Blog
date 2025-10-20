@@ -20,6 +20,7 @@ $routes = [
     'post-create-action'      => __DIR__ . '/../src/controllers/post-create-action.php',
     'post-edit'               => $baseViewPath . 'posts/post-edit.php',
     'post-update-action'      => __DIR__ . '/../src/controllers/post-update-action.php',
+    'post-delete-action'      => __DIR__ . '/../src/controllers/post-delete-action.php',
     'users-login'             => $baseViewPath . 'users/login.php',
     'users-register'          => $baseViewPath . 'users/register.php',
     'users-profile'           => $baseViewPath . 'users/profile.php',

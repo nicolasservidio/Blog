@@ -27,6 +27,19 @@ ob_start();
     <div class="container" id="main-content">
 
         <?php if ($post): ?>
+
+            <!-- success/error messags for deletion -->
+            <?php if (isset($_SESSION['delete_post_success'])): ?>
+                <div class="alert alert-success text-center"><?= htmlspecialchars($_SESSION['delete_post_success']) ?></div>
+                <?php unset($_SESSION['delete_post_success']); ?>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['delete_post_error'])): ?>
+                <div class="alert alert-danger text-center"><?= htmlspecialchars($_SESSION['delete_post_error']) ?></div>
+                <?php unset($_SESSION['delete_post_error']); ?>
+            <?php endif; ?>
+
+            <!-- Blog post -->
             <article class="card-custom mb-4">
                 <div class="card-header">
                     <h2><?= htmlspecialchars($post['title']) ?></h2>
@@ -66,8 +79,13 @@ ob_start();
 
                 <?php if ($isAdmin || $isAuthor): ?>
                     <div class="text-end mt-3">
+                        
                         <a href="<?= BASE_PATH ?>index.php?page=post-edit&id=<?= $post['id'] ?>" class="btn btn-outline-primary me-2">✏️ Edit</a>
-                        <a href="<?= BASE_PATH ?>index.php?page=post-delete&id=<?= $post['id'] ?>" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete this post?')">🗑️ Delete</a>
+
+                        <form action="<?= BASE_PATH ?>index.php?page=post-delete-action" method="POST" class="d-inline-block" onsubmit="return confirm('Are you sure you want to archive this post?');">                            
+                            <button type="submit" class="btn btn-outline-danger">🗑️ Archive</button>
+                            <input type="hidden" name="id" value="<?= $post['id'] ?>">
+                        </form>
                     </div>
                 <?php endif; ?>
             </article>

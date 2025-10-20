@@ -23,7 +23,7 @@ class PostController {
 
     // Get posts by author and optional status
     public static function getByAuthorAndStatus($conn, $author_id, $status = null) {
-        
+
         return Post::getByAuthorAndStatus($conn, $author_id, $status);
     }
 
@@ -70,6 +70,11 @@ class PostController {
 
         $result = Post::deletePost($conn, $id);
         return $result;
+    }
+
+    // Archive post (logical deletion)
+    public static function archive($conn, $id) {
+        return Post::archivePost($conn, $id);
     }
 
 }
