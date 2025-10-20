@@ -47,8 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' &&
 
         $stmt->close();
 
-        // Insert new user (no cryptography, demo mode)
-        $stmt = $connection->prepare("INSERT INTO users (name, email, password, role, status, created_at, updated_at) VALUES (?, ?, ?, 'author', 'active', NOW(), NOW())");
+        // Insert new user (be aware: no cryptography, demo mode!)
+        $stmt = $connection->prepare("INSERT INTO users (name, email, password, role, status, created_at, updated_at) 
+                                                 VALUES (?, ?, ?, 'user', 'active', NOW(), NOW())");
         $stmt->bind_param("sss", $name, $email, $password);
         $success = $stmt->execute();
 
@@ -66,19 +67,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' &&
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             ];
-
+        
             $stmt->close();
             $connection->close();
 
             header('Location: ' . BASE_PATH . 'index.php?page=users-profile');
             exit;
-        } else {
+        } 
+        else {
             $errorMessage = "Registration failed. Please try again.";
         }
 
         $stmt->close();
         $connection->close();
-    } else {
+    } 
+    else {
         $errorMessage = "Validation failed. Please check your input.";
     }
 }

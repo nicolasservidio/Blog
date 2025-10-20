@@ -29,6 +29,7 @@ $username = $isLoggedIn && isset($_SESSION['user']['name'])
         <!-- Navigation Links -->
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav ms-auto">
+
                 <li class="nav-item">
                     <a class="nav-link" href="<?= BASE_PATH ?>index.php">Home</a>
                 </li>
@@ -47,6 +48,7 @@ $username = $isLoggedIn && isset($_SESSION['user']['name'])
                             <a class="dropdown-item" href="<?= BASE_PATH ?>index.php?page=users-logout">Sign out</a>
                         </div>
                     </li>
+
                 <?php else: ?>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= BASE_PATH ?>index.php?page=users-login">Login</a>
@@ -54,6 +56,7 @@ $username = $isLoggedIn && isset($_SESSION['user']['name'])
                     <li class="nav-item">
                         <a class="nav-link" href="<?= BASE_PATH ?>index.php?page=users-register">Sign up</a>
                     </li>
+                    
                 <?php endif; ?>
                 <!-- Theme Toggle -->
                 <li class="nav-item">

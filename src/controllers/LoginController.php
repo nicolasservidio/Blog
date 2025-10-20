@@ -59,8 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
                     case 'admin':
                         $_SESSION['user']['role'] = 'Sr Administrator';
                         break;
-                    default:
+                    case 'user':
                         $_SESSION['user']['role'] = 'Sr Author';
+                        break;
+                    default:
+                        $_SESSION['user']['role'] = 'Your role';
                         break;
                 }
 

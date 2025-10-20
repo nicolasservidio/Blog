@@ -1,11 +1,4 @@
 <?php
-/**
- * ============================================================================
- * LOGIN VIEW — login.php
- * For PHP+MySQL MVC projects using Bootstrap
- * Author: Nicolás Servidio
- * ============================================================================
- */
 
 require_once __DIR__ . '/../../../config/constants.php';
 
