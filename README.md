@@ -1,6 +1,8 @@
-# Simple PHP Blog System
+# 📚 CMS Blog — A Modular PHP+MySQL Publishing System
 
-A simple, clean blog system built with PHP and MySQL. No frameworks, no complex dependencies - just pure PHP that works with XAMPP and Railway.
+This is a simple, clean CMS and blog system built with PHP and MySQL. No frameworks, no complex dependencies - just pure PHP that works with XAMPP and Railway.
+
+Blog is a universal, modular, and audit-friendly blog system built with PHP, MySQL, and Bootstrap. Designed for total autonomy, role-aware access, and evolutionary logging, it supports post publishing, category management, and user authentication with easy and clarity.
 
 ## Features
 
@@ -11,6 +13,39 @@ A simple, clean blog system built with PHP and MySQL. No frameworks, no complex 
 - **Bootstrap UI**: Clean, responsive design
 - **User Authentication**: Simple login system
 - **Admin Dashboard**: Basic content management
+
+### ✅ Post Management:
+
+- Create, edit, publish, and archive posts
+- Logical deletion (no physical removal)
+- Markdown rendering via Parsedown
+- Role-aware access (author/admin)
+
+### ✅ Category Module
+
+- List, create, and view categories
+- Slug-based filtering of posts
+- Color-coded Bootstrap cards
+- Admin-only creation flo
+
+### ✅ User System
+
+- Login, registration, and profile
+- Role-based navigation (Sr Administrator, user)
+- Avatar and bio support
+
+### ✅ Routing & Layout
+
+- Centralized router in public/index.php
+- Clean separation of views and actions
+- Universal layout with header/footer
+- Theme toggle and accessibility hooks
+
+### ✅ Database Design
+
+- Normalized schema with referential integrity
+- ENUM-based status control
+- Indexed slugs, timestamps, and foreign keys
 
 ## Technology Stack
 
@@ -87,13 +122,17 @@ blog-app/
 
 ## Default Login
 - **Email**: admin@blog.com
-- **Password**: admin
+- **Password**: administrador
+
+Any other user:
+**Password**: 12345678
 
 ## Pages
-- `/` - Home page with recent posts
-- `/blog` - All blog posts
+- `/Profile` - Profile of the user with all his posts
+- `/Posts` - All blog posts
+- `/Categories` - All the categories of the blog
 - `/login` - Login form
-- `/admin` - Admin dashboard
+- `/register` - Sign up form
 
 ## Database Tables
 - `users` - User accounts
