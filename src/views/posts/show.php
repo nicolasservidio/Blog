@@ -16,6 +16,9 @@ $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 $data = $id ? PostController::edit($conn, $id) : null;
 $post = $data['post'] ?? null;
 
+require_once __DIR__ . '/../../utils/Parsedown.php';  // Enable Markdown Rendering with "Parsedown" (https://github.com/erusev/parsedown)
+$Parsedown = new Parsedown();
+
 // Start output buffering
 ob_start();
 ?>
@@ -45,7 +48,8 @@ ob_start();
                     <?php endif; ?>
 
                     <div class="post-content">
-                        <?= nl2br(htmlspecialchars($post['content'])) ?>
+                        <?php // nl2br(htmlspecialchars($post['content'])); ?> <!-- This is default, now using "Parsedown" -->
+                        <?= $Parsedown->text($post['content']) ?>
                     </div>
                 </div>
 
