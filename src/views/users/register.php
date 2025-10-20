@@ -1,14 +1,11 @@
 <?php
 
+require_once __DIR__ . '/../../../config/constants.php';
+
 if (basename($_SERVER['SCRIPT_FILENAME']) === basename(__FILE__)) {  // This automatically redirects if someone accesses the file directly.
     header('Location: ' . BASE_PATH . 'index.php?page=users-register');
     exit;
 }
-
-require_once __DIR__ . '/../../../config/constants.php';
-
-// Include controller logic directly (like in login.php)
-require_once __DIR__ . "/../../controllers/RegisterController.php";
 
 $pageTitle = 'Sign Up';
 
@@ -23,28 +20,32 @@ ob_start();
                     <div class="card-header text-center">
                         <h2 class="mb-0">Create Account</h2>
                     </div>
-                    
+
                     <div class="card-body">
                         <!-- Alert placeholder -->
-                        <?php if (!empty($errorMessage)): ?>
+                        <?php if (!empty($_SESSION['signup_error'])): ?>
                             <div class="alert-custom alert-error">
-                                <?= htmlspecialchars($errorMessage) ?>
-                                <?= htmlspecialchars($validations ?? '') ?>
+                                <?= htmlspecialchars($_SESSION['signup_error']) ?>
+                                <?= htmlspecialchars($_SESSION['signup_validations'] ?? '') ?>
                             </div>
+                            <?php
+                                unset($_SESSION['signup_error']);
+                                unset($_SESSION['signup_validations']);
+                            ?>
                         <?php endif; ?>
 
-                        <form action="" method="POST" class="form-accessible" data-autosave="register-form">
+                        <form action="<?= BASE_PATH ?>index.php?page=register-action" method="POST" class="form-accessible" data-autosave="register-form">
                             <div class="form-group">
                                 <label for="name" class="form-label accessible-label">Full Name</label>
                                 <input type="text" id="name" name="name" required placeholder="Your full name"
-                                       value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
+                                       value="<?= isset($_SESSION['signup_name']) ? htmlspecialchars($_SESSION['signup_name']) : (isset($_POST['name']) ? htmlspecialchars($_POST['name']) : '') ?>">
                                 <div class="form-error"></div>
                             </div>
 
                             <div class="form-group">
                                 <label for="email" class="form-label accessible-label">Email address</label>
                                 <input type="email" id="email" name="email" required placeholder="you@example.com"
-                                       value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
+                                       value="<?= isset($_SESSION['signup_email']) ? htmlspecialchars($_SESSION['signup_email']) : (isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '') ?>">
                                 <div class="form-error"></div>
                             </div>
 
@@ -76,6 +77,8 @@ ob_start();
         </div>
     </div>
 </section>
+<?php unset($_SESSION['signup_name']); ?>
+<?php unset($_SESSION['signup_email']); ?>
 
 <?php
 $content = ob_get_clean();

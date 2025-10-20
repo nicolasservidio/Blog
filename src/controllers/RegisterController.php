@@ -26,8 +26,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' &&
 
         // Basic password match check
         if ($password !== $confirmPassword) {
-            $errorMessage = "Passwords do not match.";
-            return;
+
+            $_SESSION['signup_error'] = "Passwords do not match.";
+            $_SESSION['signup_email'] = $_POST['email'];
+            $_SESSION['signup_name'] = $_POST['name'];
+            header('Location: ' . BASE_PATH . 'index.php?page=users-register');
+            exit;
         }
 
         $connection = connectDB();
@@ -39,10 +43,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' &&
         $stmt->store_result();
 
         if ($stmt->num_rows > 0) {
-            $errorMessage = "Email is already registered.";
+
             $stmt->close();
             $connection->close();
-            return;
+            
+            $_SESSION['signup_error'] = "Email is already registered.";
+            $_SESSION['signup_email'] = $_POST['email'];
+            $_SESSION['signup_name'] = $_POST['name'];
+            header('Location: ' . BASE_PATH . 'index.php?page=users-register');
+            exit;
         }
 
         $stmt->close();
@@ -84,4 +93,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' &&
     else {
         $errorMessage = "Validation failed. Please check your input.";
     }
+}
+
+// Alert placeholder for register.php
+if (!empty($errorMessage)) {
+    $_SESSION['signup_error'] = $errorMessage;
+    $_SESSION['signup_validations'] = $validations;
+    $_SESSION['signup_email'] = $_POST['email']; // Thesse are for the fields in the form!
+    $_SESSION['signup_name'] = $_POST['name']; 
+    header('Location: ' . BASE_PATH . 'index.php?page=users-register');
+    exit;
 }
