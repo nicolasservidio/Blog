@@ -45,11 +45,10 @@ ob_start();
 
                     <div class="card-body">
                         <form action="<?= BASE_PATH ?>index.php?page=post-update-action" method="POST" class="form-accessible">
-                            <input type="hidden" name="id" value="<?= $post['id'] ?>">
 
                             <div class="form-group">
-                                <label for="title" class="form-label accessible-label">Title</label>
-                                <input type="text" id="title" name="title" required value="<?= htmlspecialchars($post['title']) ?>">
+                                <label for="titlepost" class="form-label accessible-label">Title</label>
+                                <input type="text" id="titlepost" name="titlepost" required value="<?= htmlspecialchars($post['title']) ?>">
                             </div>
 
                             <div class="form-group">
@@ -108,6 +107,8 @@ ob_start();
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-custom">💾 Save Changes</button>
                             </div>
+
+                            <input type="hidden" name="id" value="<?= $post['id'] ?>">
                         </form>
                     </div>
                 </div>

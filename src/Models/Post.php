@@ -6,7 +6,7 @@ class Post {
     public static function getAll($conn) {
 
         $List = array();
-        $sql = "SELECT * FROM posts ORDER BY created_at DESC";
+        $sql = "SELECT * FROM posts WHERE status != 'archived' ORDER BY created_at DESC";
 
         $result = mysqli_query($conn, $sql);
 
@@ -68,7 +68,7 @@ class Post {
             $List['updated_at'] = $data['updated_at'];
             $List['author_name'] = $data['author_name'] ?? 'Unknown';
             $List['category_name'] = $data['category_name'] ?? 'Uncategorized';
-            
+
             return $List;
         }
 
@@ -95,12 +95,12 @@ class Post {
                 WHERE id = ?";
 
         $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "sssssiisssi", $title, $slug, $content, $excerpt, $featured_image, $category_id, $meta_title, $meta_description, $status, $id);
+        mysqli_stmt_bind_param($stmt, "sssssisssi", $title, $slug, $content, $excerpt, $featured_image, $category_id, $meta_title, $meta_description, $status, $id);
 
         return mysqli_stmt_execute($stmt);
     }
 
-    // Delete post
+    // Delete post (physical deletion)
     public static function deletePost($conn, $id) {
 
         $sql = "DELETE FROM posts WHERE id = ?";
@@ -110,6 +110,18 @@ class Post {
 
         return mysqli_stmt_execute($stmt);
     }
+
+    // Logical deletion of the post 
+    public static function archivePost($conn, $id) {
+
+        $sql = "UPDATE posts SET status = 'archived', updated_at = CURRENT_TIMESTAMP WHERE id = ?";
+
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "i", $id);
+
+        return mysqli_stmt_execute($stmt);
+    }
+
 }
 
 ?>
