@@ -1,34 +1,43 @@
 <?php
 
-function validateUser() {
+function validateUser(): string {
 
-// Preprocessing
-$_POST['email'] = strip_tags(trim($_POST['email'])); // avoiding code injections, trimming
-$_POST['password'] = strip_tags(trim($_POST['password']));
+    // Sanitize input
+    $email = isset($_POST['email']) ? strip_tags(trim($_POST['email'])) : '';
+    $password = isset($_POST['password']) ? strip_tags(trim($_POST['password'])) : '';
 
-// Validations
-$Errors = '';
-if (empty($_POST['email'])) {
-    $Errors = "- The email field cannot be empty. <br>";
-}
-if (empty($_POST['password'])) {
-    $Errors.="- The password field cannot be empty. <br>";
-}
+    // Overwrite sanitized values back into $_POST for consistency
+    $_POST['email'] = $email;
+    $_POST['password'] = $password;
 
-if (strlen($_POST['email']) < 4 || strlen($_POST['email']) > 20) {
-    $Errors.="- The email cannot be less than 4 characters or more than 20. <br>";
-}
-if (strlen($_POST['password']) < 3) {
-    $Errors.="- The password cannot be less than 3 characters long. <br>";
-}
+    // Initialize error collector
+    $errors = [];
 
-// Editing the message
-if (!empty($Errors)) {
-    $linebreak = '<br><br>';
-    $linebreak.=$Errors;
-    $Errors = $linebreak;
-}
-return $Errors;
+    // Email validations
+    if (empty($email)) {
+        $errors[] = "- The email field cannot be empty.";
+    } 
+    elseif (strlen($email) < 4 || strlen($email) > 50) {
+        $errors[] = "- The email must be between 4 and 50 characters.";
+    } 
+    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "- The email format is invalid.";
+    }
+
+    // Password validations
+    if (empty($password)) {
+        $errors[] = "- The password field cannot be empty.";
+    } 
+    elseif (strlen($password) < 8) {
+        $errors[] = "- The password must be at least 8 characters long.";
+    }
+
+    // Compile error messages from the array
+    if (!empty($errors)) {
+        return '<br><br>' . implode('<br>', $errors);
+    }
+
+    return '';
 }
 
 ?>

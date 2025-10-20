@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' &&
         $name = $_POST['name'];
         $email = $_POST['email'];
         $password = $_POST['password'];
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // password hashing
         $confirmPassword = $_POST['confirm_password'];
 
         // Basic password match check
@@ -59,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' &&
         // Insert new user (be aware: no cryptography, demo mode!)
         $stmt = $connection->prepare("INSERT INTO users (name, email, password, role, status, created_at, updated_at) 
                                                  VALUES (?, ?, ?, 'user', 'active', NOW(), NOW())");
-        $stmt->bind_param("sss", $name, $email, $password);
+        $stmt->bind_param("sss", $name, $email, $hashedPassword);
         $success = $stmt->execute();
 
         if ($success) {

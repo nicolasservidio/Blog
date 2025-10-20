@@ -25,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
 
         $connection = connectDB();
     
-        // Secure query: fetch user by email and password, no cryptography since this is just a demo
-        $stmt = $connection->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
-        $stmt->bind_param("ss", $email, $password);
+        // Secure query: fetch user by email only 
+        $stmt = $connection->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
             $connection->close();
 
             // Verify password securely
-            if ($password == $user['password']) { // this is just for the demo, since we are not using cryptographic validations here, but you should
+            if (password_verify($password, $user['password'])) {    // we are using PHP default cryptographic validations here, comparing the raw input with the hashed password stored in the DB
 
                 unset($_SESSION['user']); // Pre-session cleanup. This prevents residual data from being left behind if the login is repeated.
                 // Store user data in session (compatible with header.php)
