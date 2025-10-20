@@ -17,6 +17,7 @@ $page = $_GET['page'] ?? 'users-login'; // Default to login
 $routes = [
     'login-action'            => __DIR__ . '/../src/controllers/LoginController.php',
     'register-action'         => __DIR__ . '/../src/controllers/RegisterController.php',
+    'post-create-action'      => __DIR__ . '/../src/controllers/post-create-action.php',
     'users-login'             => $baseViewPath . 'users/login.php',
     'users-register'          => $baseViewPath . 'users/register.php',
     'users-profile'           => $baseViewPath . 'users/profile.php',

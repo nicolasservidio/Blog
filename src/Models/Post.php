@@ -71,7 +71,7 @@ class Post {
                             VALUES (?, ?, ?, ?, ?, 'draft', ?, ?, ?, ?, CURRENT_TIMESTAMP)";
 
         $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "sssssiisss", $title, $slug, $content, $excerpt, $featured_image, $author_id, $category_id, $meta_title, $meta_description);
+        mysqli_stmt_bind_param($stmt, "sssssiiss", $title, $slug, $content, $excerpt, $featured_image, $author_id, $category_id, $meta_title, $meta_description);
 
         return mysqli_stmt_execute($stmt);
     }
