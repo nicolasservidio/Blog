@@ -34,7 +34,9 @@ ob_start();
                 </div>
 
                 <?php if (!empty($post['featured_image'])): ?>
-                    <img src="<?= htmlspecialchars($post['featured_image']) ?>" alt="Featured image" class="img-fluid mb-3 rounded">
+                    <a href="<?= htmlspecialchars($post['featured_image']) ?>" target="_blank">
+                        <img src="<?= htmlspecialchars($post['featured_image']) ?>" alt="Featured image" class="img-fluid mb-3 rounded shadow-sm">
+                    </a>
                 <?php endif; ?>
 
                 <div class="card-body">
@@ -51,6 +53,19 @@ ob_start();
                     Category: <?= htmlspecialchars($post['category_name']) ?> |
                     Author: <?= htmlspecialchars($post['author_name']) ?>
                 </div>
+
+                <!-- Edit and delete buttons for author and admin only -->
+                <?php
+                $isAdmin = isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin';
+                $isAuthor = isset($_SESSION['user']) && $_SESSION['user']['id'] == $post['author_id'];
+                ?>
+
+                <?php if ($isAdmin || $isAuthor): ?>
+                    <div class="text-end mt-3">
+                        <a href="<?= BASE_PATH ?>index.php?page=post-edit&id=<?= $post['id'] ?>" class="btn btn-outline-primary me-2">✏️ Edit</a>
+                        <a href="<?= BASE_PATH ?>index.php?page=post-delete&id=<?= $post['id'] ?>" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete this post?')">🗑️ Delete</a>
+                    </div>
+                <?php endif; ?>
             </article>
 
             <div class="text-center">
