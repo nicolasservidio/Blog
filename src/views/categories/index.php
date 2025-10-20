@@ -41,7 +41,14 @@ ob_start();
                     <?php endif; ?>
                 <?php endforeach; ?>
             </div>
-            
+
+        <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'Sr Administrator'): ?>
+            <div class="text-center mt-4">
+                <br><br>
+                <a href="<?= BASE_PATH ?>index.php?page=categories-create" class="btn btn-outline-success">➕ Create New Category</a>
+            </div>
+        <?php endif; ?>
+
         <?php else: ?>
             <div class="alert alert-info text-center">No categories found.</div>
         <?php endif; ?>
