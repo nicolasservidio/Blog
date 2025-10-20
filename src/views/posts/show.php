@@ -8,7 +8,7 @@ if (!defined('BASE_PATH')) {
     exit('Direct access not allowed.');
 }
 
-$pageTitle = 'Post Details';
+$pageTitle = isset($post['title']) ? $post['title'] : 'Post Details';
 $conn = connectDB();
 
 // Validate and retrieve post ID
@@ -22,7 +22,7 @@ ob_start();
 
 <section class="section section-light fade-in">
     <div class="container" id="main-content">
-        
+
         <?php if ($post): ?>
             <article class="card-custom mb-4">
                 <div class="card-header">
@@ -48,8 +48,8 @@ ob_start();
                 </div>
 
                 <div class="card-footer text-muted small">
-                    Category ID: <?= $post['category_id'] ?? 'None' ?> |
-                    Author ID: <?= $post['author_id'] ?? 'Unknown' ?>
+                    Category: <?= htmlspecialchars($post['category_name']) ?> |
+                    Author: <?= htmlspecialchars($post['author_name']) ?>
                 </div>
             </article>
 

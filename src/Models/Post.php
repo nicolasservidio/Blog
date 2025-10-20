@@ -36,7 +36,15 @@ class Post {
     public static function findById($conn, $id) {
 
         $List = array();
-        $sql = "SELECT * FROM posts WHERE id = ?";
+        $sql = "SELECT 
+                    p.*, 
+                    u.name AS author_name, 
+                    c.name AS category_name 
+                FROM posts p
+                LEFT JOIN users u ON p.author_id = u.id
+                LEFT JOIN categories c ON p.category_id = c.id
+                WHERE p.id = ?
+            ";
 
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "i", $id);
@@ -58,6 +66,9 @@ class Post {
             $List['meta_description'] = $data['meta_description'];
             $List['created_at'] = $data['created_at'];
             $List['updated_at'] = $data['updated_at'];
+            $List['author_name'] = $data['author_name'] ?? 'Unknown';
+            $List['category_name'] = $data['category_name'] ?? 'Uncategorized';
+            
             return $List;
         }
 
