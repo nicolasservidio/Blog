@@ -1,10 +1,13 @@
 <?php
 
-// We need to Load Composer's autoloader to access external packages like vlucas/phpdotenv
+// We need to install Composer: https://getcomposer.org/download/ (requires that you have PHP (standalone PHP, not just XAMPP) already installed)
+// We need to install vlucas/phpdotenv: with Composer or manual installation using the repo at https://github.com/vlucas/phpdotenv 
+
+// We need to load Composer's autoloader to access external packages like vlucas/phpdotenv
 require_once __DIR__ . '/../vendor/autoload.php';
 
 // Then, we initialize vlucas/phpdotenv's "Dotenv" to load environment variables from the local .env file. This only works in local environments like XAMPP — platforms like Railway inject variables automatically
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv = Dotenv\Dotenv::createMutable(__DIR__ . '/../');
 $dotenv->load();
 
 // And now we need the function to connect to MySQL using the environment variables from .env, Railway or any other platform:
@@ -13,11 +16,11 @@ function connectDB() {
 
     // Retrieve database connection values from the environment. These are injected in production by deployment platforms like Railway, or loaded from .env locally:
 
-    $host = getenv('MYSQLHOST');       // e.g., "localhost" (XAMPP) or "containers.uprailway.app" (Railway)
-    $user = getenv('MYSQLUSER');       // e.g., "root"
-    $pass = getenv('MYSQLPASSWORD');   // e.g., "" (XAMPP) or Railway-generated password
-    $db   = getenv('MYSQLDATABASE');   // e.g., "blog_db"
-    $port = getenv('MYSQLPORT');       // e.g., "3306"
+    $host = $_ENV['MYSQLHOST'] ?? null;       // e.g., "localhost" (XAMPP) or "containers.uprailway.app" (Railway)
+    $user = $_ENV['MYSQLUSER'] ?? null;       // e.g., "root"
+    $pass = $_ENV['MYSQLPASSWORD'] ?? null;   // e.g., "" (XAMPP) or Railway-generated password
+    $db   = $_ENV['MYSQLDATABASE'] ?? null;   // e.g., "blog_db"
+    $port = $_ENV['MYSQLPORT'] ?? 3306;       // e.g., "3306"
 
     // Establish connection using mysqli with all parameters, including port
     $connection = mysqli_connect($host, $user, $pass, $db, $port);
