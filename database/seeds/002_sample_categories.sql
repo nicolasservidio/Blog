@@ -5,3 +5,4 @@ INSERT INTO categories (name, slug, description, color) VALUES
 ('Travel', 'travel', 'Posts about travel and adventures', '#ffc107'),
 ('Food', 'food', 'Posts about food and recipes', '#dc3545'),
 ('Health', 'health', 'Posts about health and wellness', '#6f42c1');
+
