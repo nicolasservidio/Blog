@@ -3,12 +3,14 @@
 // We need to install Composer: https://getcomposer.org/download/ (requires that you have PHP (standalone PHP, not just XAMPP) already installed)
 // We need to install vlucas/phpdotenv: with Composer or manual installation using the repo at https://github.com/vlucas/phpdotenv 
 
-// We need to load Composer's autoloader to access external packages like vlucas/phpdotenv
-require_once __DIR__ . '/../vendor/autoload.php';
+// We load environment variables from a .env file, but only if we are in a local environment - e.g. using XAMPP, as platforms like Railway inject variables. The .env file is not uploaded to platforms like GitHub, Railway and so on (i.e. we will have a fatal error if we try to load a non-existing .env file on Railway)
+$envPath = __DIR__ . '/../.env';   // Path to the .env file
+if (file_exists($envPath)) {       // Check if .env file exists (i.e., we are in a local environment) 
 
-// Then, we initialize vlucas/phpdotenv's "Dotenv" to load environment variables from the local .env file, but only in the local environment (.env file is not uploaded to platforms like Railway). This only works in local environments like XAMPP — platforms like Railway inject variables automatically, and we never upload an .env file to GitHub, Railway and so on (i.e. we will have a fatal error if we try to load a non-existing .env file on Railway)
-$envPath = __DIR__ . '/../.env';  // Path to the .env file
-if (file_exists($envPath)) {  // Check if .env file exists (i.e., we are in a local environment) 
+    // We need to load Composer's autoloader to access external packages like vlucas/phpdotenv (which reads the .env file and loads the environment variables)
+    require_once __DIR__ . '/../vendor/autoload.php';
+
+    // Then, we initialize Dotenv (from vlucas/phpdotenv) to load environment variables from the local .env file 
     $dotenv = Dotenv\Dotenv::createMutable(__DIR__ . '/../');
     $dotenv->load();
     error_log("✅ Environment loaded from .env file in a local environment");
