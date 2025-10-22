@@ -74,8 +74,9 @@ Blog is a universal, modular, and audit-friendly blog system built with PHP, MyS
 
 ```
 blog-app/
+│
 ├── public/                      # Entry point for Railway (index.php)
-│   ├── index.php                # Main router or homepage
+│   │
 │   ├── assets/                  # Public static files
 │   │   ├── css/
 │   │   │   └── style.css
@@ -83,56 +84,106 @@ blog-app/
 │   │   │   └── main.js
 │   │   └── img/
 │   │       └── logo.png
+│   ├── index.php                # Main router or homepage
+│   ├── test-db.php              # Test database connection
+│   └── ...
+│
 ├── src/
-│   ├── controllers/             # Procedural controllers
+│   ├── utils/                   # Utilities
+│   │   ├── Parserdown.php
+│   │   ├── validateUser.php
+│   │   └── ...
+│   │ 
+│   ├── controllers/             # Procedural and OOP controllers
 │   │   ├── UserController.php
 │   │   ├── CategoryController.php
-│   │   └── PostController.php
-│   ├── views/                   # Views (HTML + embedded PHP)
+│   │   ├── PostController.php
+│   │   └── ...
+│   │ 
+│   ├── views/                   # Views or Presentation Layer (HTML + embedded PHP)
 │   │   ├── users/
 │   │   │   ├── login.php
+│   │   │   ├── logout.php
+│   │   │   ├── profile.php
 │   │   │   ├── register.php
-│   │   │   └── profile.php
+│   │   │   └── ...
 │   │   ├── categories/
-│   │   │   ├── index.php
-│   │   │   └── show.php
-│   │   ├── posts/
+│   │   │   ├── create.php
 │   │   │   ├── index.php
 │   │   │   ├── show.php
-│   │   │   └── create.php
+│   │   │   └── ...
+│   │   ├── posts/
+│   │   │   ├── create.php
+│   │   │   ├── index.php
+│   │   │   ├── post-edit.php
+│   │   │   ├── show.php
+│   │   │   └── ...
 │   │   └── layout/              # Shared layout components
+│   │       ├── footer.php
 │   │       ├── header.php
-│   │       └── footer.php
-│   └── models/                  # OOP classes only
+│   │       ├── main.php
+│   │       └── ...
+│   └── models/                  # Main OOP classes 
 │       ├── User.php
 │       ├── Category.php
-│       └── Post.php
+│       ├── Post.php
+│       └── ...
+│
 ├── config/                      # Configuration files
-│   └── conn.php                 # MySQL connection logic
+│   ├── conn.php                 # MySQL connection logic
+│   ├── constants.php            # For detection of BASE_PATHs
+│   └── ...
+│
 ├── database/                    # DB structure and seed data
 │   ├── migrations/
 │   │   ├── 001_create_users_table.sql
 │   │   ├── 002_create_categories_table.sql
-│   │   └── 003_create_posts_table.sql
+│   │   ├── 003_create_posts_table.sql
+│   │   └── ...
 │   ├── seeds/
 │   │   ├── 001_admin_user.sql
-│   │   └── 002_sample_categories.sql
+│   │   ├── 002_sample_categories.sql
+│   │   └── ...
+│   └── full database/
+│       ├── blog_db.sql
+│       └── ...
+│
+├── vendor/ 
+│   ├── graham-campbell
+│   ├── phpoption
+│   ├── vlucas
+│   └── ...
+│
+├── .dockerignore
+├── .env.example
+├── .gitignore
+├── composer.json
+├── Dockerfile
 ├── README.md                    # Project documentation
+│
 ```
 
 ## Default Login
 - **Email**: admin@blog.com
 - **Password**: administrador
 
-Any other user:
-**Password**: 12345678
+Other users:
+
+- **Password**: 12345678
+- **Emails**: 
+    - rosa@blog.com
+    - nicolas@blog.com
+    - maria@blog.com
+    - rosario@blog.com
+    - augusto@blog.com
 
 ## Pages
+
 - `/Profile` - Profile of the user with all his posts
 - `/Posts` - All blog posts
 - `/Categories` - All the categories of the blog
-- `/login` - Login form
-- `/register` - Sign up form
+- `/Login` - Login form
+- `/Register` - Sign up form
 
 ## Database Tables
 - `users` - User accounts
