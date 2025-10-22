@@ -6,9 +6,16 @@
 // We need to load Composer's autoloader to access external packages like vlucas/phpdotenv
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// Then, we initialize vlucas/phpdotenv's "Dotenv" to load environment variables from the local .env file. This only works in local environments like XAMPP — platforms like Railway inject variables automatically
-$dotenv = Dotenv\Dotenv::createMutable(__DIR__ . '/../');
-$dotenv->load();
+// Then, we initialize vlucas/phpdotenv's "Dotenv" to load environment variables from the local .env file, but only in the local environment (.env file is not uploaded to platforms like Railway). This only works in local environments like XAMPP — platforms like Railway inject variables automatically, and we never upload an .env file to GitHub, Railway and so on (i.e. we will have a fatal error if we try to load a non-existing .env file on Railway)
+$envPath = __DIR__ . '/../.env';  // Path to the .env file
+if (file_exists($envPath)) {  // Check if .env file exists (i.e., we are in a local environment) 
+    $dotenv = Dotenv\Dotenv::createMutable(__DIR__ . '/../');
+    $dotenv->load();
+    error_log("✅ Environment loaded from .env file in a local environment");
+} 
+else {
+    error_log("✅ Environment loaded from platform injection (e.g., Railway)");
+}
 
 // And now we need the function to connect to MySQL using the environment variables from .env, Railway or any other platform:
 
