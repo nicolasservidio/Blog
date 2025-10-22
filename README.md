@@ -98,6 +98,12 @@ blog-app/
 │   │   ├── UserController.php
 │   │   ├── CategoryController.php
 │   │   ├── PostController.php
+│   │   ├── LoginController.php
+│   │   ├── RegisterController.php
+│   │   ├── categories-store-action.php
+│   │   ├── post-create-action.php
+│   │   ├── post-delete-action.php
+│   │   ├── post-update-action.php
 │   │   └── ...
 │   │ 
 │   ├── views/                   # Views or Presentation Layer (HTML + embedded PHP)
