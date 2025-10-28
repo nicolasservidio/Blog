@@ -2,7 +2,9 @@
 
 This is a simple, clean content management and plublishing system built with PHP, MySQL and Bootstrap. No PHP frameworks, no complex dependencies - just pure PHP that works with XAMPP and PaaS environments like Railway.
 
-Blogin is a modular, expandable, and audit-friendly publishing system. It features a strict **MVC (Model-View-Controller) architecture** designed to clearly demonstrate MVC implementation and object-oriented programming in PHP. This makes it ideal for customization but also for learning. The system includes comprehensive CSS and JavaScript assets equipped with collections of classified, reusable code blocks, that allow developers to radically reshape the appearance and behavior of Blogin, effectively turning it into a custom-tailored solution. Thanks to this modular design and rich front-end toolkit, Blogin serves as a flexible starting point for building other lightweight PHP applications.
+Blogin is a modular, expandable, and audit-friendly publishing system. It features a strict **MVC (Model-View-Controller) architecture** designed to clearly demonstrate MVC implementation and object-oriented programming in PHP. This makes it ideal for customization but also for learning. 
+
+The system also includes comprehensive CSS and JavaScript assets equipped with collections of classified, reusable code blocks, that allow developers to radically reshape the appearance and behavior of Blogin, effectively turning it into a custom-tailored solution. Thanks to this modular design and rich front-end toolkit, Blogin serves as a flexible starting point for building other lightweight PHP applications.
 
 Blogin supports role-based access control with clear permissions, secure user authentication with encryption, publishing, and category management - delivering simplicity, autonomy, and scalability out of the box.
 
