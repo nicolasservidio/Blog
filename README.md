@@ -1,8 +1,10 @@
-# 📚 CMS Blog — A Modular PHP+MySQL Publishing System
+# 📚 Blogin — A Modular PHP+MySQL Publishing System with MVC architecture
 
-This is a simple, clean CMS and blog system built with PHP and MySQL. No frameworks, no complex dependencies - just pure PHP that works with XAMPP and Railway.
+This is a simple, clean content management and plublishing system built with PHP, MySQL and Bootstrap. No PHP frameworks, no complex dependencies - just pure PHP that works with XAMPP and PaaS environments like Railway.
 
-Blog is a universal, modular, and audit-friendly blog system built with PHP, MySQL, and Bootstrap. Designed for total autonomy, role-aware access, and evolutionary logging, it supports post publishing, category management, and user authentication with easy and clarity.
+Blogin is a modular, expandable, and audit-friendly publishing system. It features a strict **MVC (Model-View-Controller) architecture** designed to clearly demonstrate MVC implementation and object-oriented programming in PHP. This makes it ideal for customization but also for learning. The system includes comprehensive CSS and JavaScript assets equipped with collections of classified, reusable code blocks, that allow developers to radically reshape the appearance and behavior of Blogin, effectively turning it into a custom-tailored solution. Thanks to this modular design and rich front-end toolkit, Blogin serves as a flexible starting point for building other lightweight PHP applications.
+
+Blogin supports role-based access control with clear permissions, secure user authentication with encryption, publishing, and category management - delivering simplicity, autonomy, and scalability out of the box.
 
 ## Features
 
