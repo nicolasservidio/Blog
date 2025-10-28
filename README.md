@@ -4,7 +4,7 @@ This is a simple, clean content management and plublishing system built with PHP
 
 Blogin is a modular, expandable, and audit-friendly publishing system. It features a strict **MVC (Model-View-Controller) architecture** designed to clearly demonstrate MVC implementation and object-oriented programming in PHP. This makes it ideal for customization but also for learning. 
 
-The system also includes comprehensive CSS and JavaScript assets equipped with collections of classified, reusable code blocks, that allow developers to radically reshape the appearance and behavior of Blogin, effectively turning it into a custom-tailored solution. Thanks to this modular design and rich front-end toolkit, Blogin serves as a flexible starting point for building other lightweight PHP applications.
+The system also includes comprehensive CSS and JavaScript assets equipped with collections of classified, reusable code blocks, allowing developers to radically reshape the appearance and behavior of Blogin, and effectively turning it into a custom-tailored solution. Thanks to its modular design and this rich front-end toolkit, Blogin serves as a flexible starting point for building other lightweight PHP applications.
 
 Blogin supports role-based access control with clear permissions, secure user authentication with encryption, publishing, and category management - delivering simplicity, autonomy, and scalability out of the box.
 
